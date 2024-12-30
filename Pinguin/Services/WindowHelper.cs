@@ -5,6 +5,7 @@ using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Pinguin;
+using Pinguin.ViewModels;
 
 namespace Pinguin.Services;
 
@@ -17,7 +18,7 @@ public static class WindowHelper
         ServiceProvider = serviceProvider;
     }
 
-    public static async Task OpenDialogAsync<TViewModel>(this object? context, bool isDialog = true) where TViewModel : ObservableObject
+    public static async Task<ViewModelBase?>? OpenDialogAsync<TViewModel>(this object? context, bool isDialog = true) where TViewModel : ObservableObject
     {
         if (context == null) throw new ArgumentNullException(nameof(context));
         var viewModel = ServiceProvider.GetRequiredService<TViewModel>();
@@ -31,11 +32,13 @@ public static class WindowHelper
         {
             window.DataContext = viewModel;
             if (isDialog)
-                window.ShowDialog(topLevel.GetVisualRoot() as Window);
+            {
+                await window.ShowDialog(topLevel.GetVisualRoot() as Window);
+                return window.DataContext as ViewModelBase;
+            }
             else
                 window.Show(topLevel.GetVisualRoot() as Window);
         }
-
-        
+        return null;
     }
 }

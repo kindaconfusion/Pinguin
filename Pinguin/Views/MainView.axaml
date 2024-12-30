@@ -7,6 +7,7 @@
         x:Class="Pinguin.Views.MainView"
         x:DataType="vm:MainViewModel"
         xmlns:services="clr-namespace:Pinguin.Services"
+        xmlns:models="clr-namespace:Pinguin.Models"
         services:WindowManager.Register="{Binding}"
         TransparencyLevelHint="Mica"
         Background="#1E000000"
@@ -18,6 +19,22 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel/>
     </Design.DataContext>
+    <!--<Window.Styles>
+    <Style Selector="DataGrid">
+        <Setter Property="RowHeaderWidth" Value="0" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGrid}">
+                    <Border Background="#2a2a2a" CornerRadius="5">
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+        </Window.Styles>-->
+
+    
     
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -25,14 +42,15 @@
                 <MenuItem Command="{Binding OpenPingOptionsCommand}" Header="Ping Options"/>
             </MenuItem>
         </Menu>
-        <DataGrid Margin="10">
+        <DataGrid Theme="{StaticResource MyDataGrid}" CornerRadius="10" ClipToBounds="True" CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Hostname"></DataGridTextColumn>
-                <DataGridTextColumn Header="IP Address"></DataGridTextColumn>
-                <DataGridTextColumn Header="Pings Sent"></DataGridTextColumn>
-                <DataGridTextColumn Header="Responses Received"></DataGridTextColumn>
-                <DataGridTextColumn Header="Pings Failed"></DataGridTextColumn>
-                <DataGridTextColumn Header="Percent Failures"></DataGridTextColumn>
+                <DataGridTextColumn Header="Hostname" Binding="{Binding HostName}"/>
+                <DataGridTextColumn Header="IP Address" Binding="{Binding IpAddress}"/>
+                <DataGridTextColumn Header="Pings Sent" Binding="{Binding PingsSent}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Responses Received" Binding="{Binding PingsReceived}"/>
+                <DataGridTextColumn Header="Pings Failed" Binding="{Binding PingsLost}"/>
+                <DataGridTextColumn Header="Percent Failures" Binding="{Binding PingPercent}"/>
+                <DataGridTextColumn Header="Average RTT" Binding="{Binding AveragePing, StringFormat={}{0:0.00}}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
