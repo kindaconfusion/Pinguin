@@ -1,0 +1,24 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600"
+        Height="600"
+        Width="600"
+        x:Class="Pinguin.Views.PingOptionsView"
+        TransparencyLevelHint="Mica"
+        Background="#1E000000"
+        Title="Ping Options">
+        <StackPanel Margin="10" Spacing="5">
+                <TextBlock Margin="3 0 0 0" Text="Ping hosts:"/>
+                <TextBox AcceptsReturn="True" Height="200"></TextBox>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="5 10" Text="Ping interval:"/>
+                        <TextBox/>
+                        <TextBlock Margin="5 10 20 10 " Text="seconds"/>
+                        <TextBlock Margin="5 10" Text="Packet size:"/>
+                        <TextBox/>
+                        <TextBlock Margin="5 10 20 10 " Text="bytes"/>
+                </StackPanel>
+        </StackPanel>
+</Window>

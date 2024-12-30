@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Pinguin.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Pinguin.Views.MainView"
+        x:DataType="vm:MainViewModel"
+        xmlns:services="clr-namespace:Pinguin.Services"
+        services:WindowManager.Register="{Binding}"
+        TransparencyLevelHint="Mica"
+        Background="#1E000000"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Pinguin">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel/>
+    </Design.DataContext>
+    
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Command="{Binding OpenPingOptionsCommand}" Header="Ping Options"/>
+            </MenuItem>
+        </Menu>
+        <DataGrid Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Hostname"></DataGridTextColumn>
+                <DataGridTextColumn Header="IP Address"></DataGridTextColumn>
+                <DataGridTextColumn Header="Pings Sent"></DataGridTextColumn>
+                <DataGridTextColumn Header="Responses Received"></DataGridTextColumn>
+                <DataGridTextColumn Header="Pings Failed"></DataGridTextColumn>
+                <DataGridTextColumn Header="Percent Failures"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+
+</Window>
