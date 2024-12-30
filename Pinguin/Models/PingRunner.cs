@@ -33,31 +33,13 @@ public class PingRunner
     {
         await ResolveIp(index, dispatcher);
         var ping = Pings[index];
-        ping.PingsReceived = 0;
-        ping.PingsSent = 0;
-        ping.PingsLost = 0;
-        ping.PingPercent = 0.0;
         while (true)
         {
             await Task.Delay(1000);
             using Ping p = new Ping();
             ping.PingsSent++;
             var reply = await p.SendPingAsync(ping.IpAddress);
-            if (reply.Status == IPStatus.Success)
-            {
-                Console.WriteLine(reply.RoundtripTime);
-                if (ping.AveragePing is null)
-                    ping.AveragePing = reply.RoundtripTime;
-                else
-                    ping.AveragePing = ((ping.AveragePing * ping.PingsReceived) + reply.RoundtripTime) / (ping.PingsReceived+1);
-                ping.PingsReceived++;
-                Console.WriteLine(ping.AveragePing);
-            }
-            else
-            {
-                ping.PingsLost++;
-            }
-            ping.PingPercent = 1 - ((double) ping.PingsReceived / ping.PingsSent);
+            ping.AddReply(reply);
             dispatcher.Invoke(() =>
             {
                 Pings[index] = ping;
@@ -66,7 +48,7 @@ public class PingRunner
         }
     }
     
-    private async Task ResolveIp(int index, Dispatcher dispatcher)
+    public async Task ResolveIp(int index, Dispatcher dispatcher)
     {
         var ping = Pings[index];
         ping.HostName.Trim().TrimEnd('\r', '\n');
