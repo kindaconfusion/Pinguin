@@ -5,6 +5,7 @@ using Pinguin.ViewModels;
 
 namespace Pinguin.Services;
 
+[Obsolete]
 public class ViewLocator : IDataTemplate
 {
     public Control? Build(object? param)

@@ -5,6 +5,7 @@ using Avalonia.Controls;
 
 namespace Pinguin.Services;
 
+[Obsolete]
 public class WindowManager
 {
     private static readonly Dictionary<object, Visual> RegistrationMapper = new();

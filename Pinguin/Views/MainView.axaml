@@ -8,6 +8,8 @@
         x:DataType="vm:MainViewModel"
         xmlns:services="clr-namespace:Pinguin.Services"
         xmlns:models="clr-namespace:Pinguin.Models"
+        xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+        xmlns:views="clr-namespace:Pinguin.Views"
         services:WindowManager.Register="{Binding}"
         TransparencyLevelHint="Mica"
         Background="#1E000000"
@@ -19,24 +21,14 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel/>
     </Design.DataContext>
-    <!--<Window.Styles>
-    <Style Selector="DataGrid">
-        <Setter Property="RowHeaderWidth" Value="0" />
-        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DataGrid}">
-                    <Border Background="#2a2a2a" CornerRadius="5">
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-        </Window.Styles>-->
 
     
-    
-    <DockPanel>
+    <dialogHostAvalonia:DialogHost Identifier="Root"
+                           CloseOnClickAway="True">
+        <dialogHostAvalonia:DialogHost.DialogContent>
+            <views:PingOptionsView/>
+        </dialogHostAvalonia:DialogHost.DialogContent>
+        <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Command="{Binding OpenPingOptionsCommand}" Header="Ping Options"/>
@@ -54,5 +46,5 @@
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
-
+    </dialogHostAvalonia:DialogHost>
 </Window>

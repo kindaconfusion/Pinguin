@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DialogHostAvalonia;
 using Pinguin.Models;
 using Pinguin.Services;
 
@@ -21,10 +22,10 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     public async Task OpenPingOptions()
     {
-        var dingus = await this.OpenDialogAsync<PingOptionsViewModel>() as PingOptionsViewModel;
-        Console.WriteLine(dingus.Options.HostNames[0]);
-        Options = dingus.Options;
-        runner.ReplacePings(Options.HostNames.Select(h => new PingObject(h)));
-        //Pings.AddRange(Options.HostNames.Select(h => new PingObject(h)));
+        /*var dingus = await this.OpenDialogAsync<PingOptionsViewModel>() as PingOptionsViewModel;
+        */
+        
+        var dicks = await DialogHost.Show(new PingOptionsViewModel()) as Options;
+        if (dicks != null) runner.ReplacePings(dicks.HostNames.Select(h => new PingObject(h)));
     }
 }

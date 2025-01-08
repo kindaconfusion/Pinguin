@@ -1,4 +1,4 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,10 +8,9 @@
         Width="600"
         x:Class="Pinguin.Views.PingOptionsView"
         x:DataType="vm:PingOptionsViewModel"
-        TransparencyLevelHint="Mica"
-        Background="#1E000000"
-        Title="Ping Options">
-        <StackPanel Margin="10" Spacing="5">
+        xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
+
+                        <StackPanel Margin="10" Spacing="5">
                 <TextBlock Margin="3 0 0 0" Text="Ping hosts:"/>
                 <TextBox AcceptsReturn="True" Height="200" Text="{Binding HostNames, Mode=TwoWay}"></TextBox>
                 <StackPanel Orientation="Horizontal">
@@ -24,4 +23,5 @@
                 </StackPanel>
                 <Button Command="{Binding SaveCommand}">Save</Button>
         </StackPanel>
-</Window>
+        
+</UserControl>

@@ -9,6 +9,7 @@ using Pinguin.ViewModels;
 
 namespace Pinguin.Services;
 
+[Obsolete]
 public static class WindowHelper
 {
     public static IServiceProvider ServiceProvider { get; private set; }
