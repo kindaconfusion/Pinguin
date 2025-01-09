@@ -14,7 +14,7 @@ namespace Pinguin.Models;
 public class PingRunner
 {
     public Options Settings { get; set; } = new ();
-    public RangeObservableCollection<PingObject> Pings { get; set; } = new();
+    public ObservableCollection<PingObject> Pings { get; set; } = new();
     
     private Dictionary<PingObject, CancellationTokenSource> _tasks = new();
     public PingRunner(IEnumerable<PingObject>? pings)
@@ -23,7 +23,7 @@ public class PingRunner
             //Pings.ReplaceRange(pings);
     }
 
-    [Obsolete("Use AddPing instead, for now...")]
+    /*[Obsolete("Use AddPing instead, for now...")]
     public void ReplacePings(IEnumerable<PingObject> pings)
     {
         Pings.ReplaceRange(pings);
@@ -33,7 +33,7 @@ public class PingRunner
             int index = i;
             //threads[i] = Task.Run(() => RunPing(index, Dispatcher.UIThread));
         }
-    }
+    }*/
 
     public async Task Tracert(string host)
     {
@@ -54,7 +54,7 @@ public class PingRunner
         Pings.Insert(end, ping);
         var cts = new CancellationTokenSource();
         _tasks.Add(ping, cts);
-        Task.Run(() => RunPing(ping, cts.Token, Dispatcher.UIThread));
+        Task.Run(() => RunPing(ping, cts.Token));
     }
     
     public async void AddPing(PingObject ping)
@@ -63,7 +63,7 @@ public class PingRunner
         Pings.Insert(end, ping);
         var cts = new CancellationTokenSource();
         _tasks.Add(ping, cts);
-        Task.Run(() => RunPing(ping, cts.Token, Dispatcher.UIThread));
+        Task.Run(() => RunPing(ping, cts.Token));
     }
 
     public async void RemovePing(PingObject ping)
@@ -75,7 +75,7 @@ public class PingRunner
         Pings.Remove(ping);
     }
 
-    private async Task RunPing(PingObject inPing, CancellationToken cancel, Dispatcher dispatcher)
+    private async Task RunPing(PingObject inPing, CancellationToken cancel)
     {
         while (true)
         {
@@ -90,10 +90,6 @@ public class PingRunner
             ping.PingsSent++;
             var reply = await p.SendPingAsync(ping.IpAddress, 2, Encoding.ASCII.GetBytes(GeneratePingContent(Settings.PacketSize.Value)));
             ping.AddReply(reply);
-            dispatcher.Invoke(() =>
-            {
-                Pings.NotifyChanges();
-            });
         }
     }
     

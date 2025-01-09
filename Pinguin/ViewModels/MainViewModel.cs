@@ -21,7 +21,7 @@ public partial class MainViewModel : ViewModelBase
 
     private readonly PingRunner _pingRunner;
     
-    public RangeObservableCollection<PingObject> Pings => _pingRunner.Pings;
+    public ObservableCollection<PingObject> Pings => _pingRunner.Pings;
 
     public MainViewModel(PingRunner pingRunner)
     {
