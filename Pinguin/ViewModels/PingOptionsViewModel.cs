@@ -12,9 +12,9 @@ namespace Pinguin.ViewModels;
 public partial class PingOptionsViewModel : ViewModelBase
 {
     
-    [ObservableProperty] private double? _interval = 1;
-    [ObservableProperty] private int? _packetSize = 32;
-    [ObservableProperty] private int? _timeout = 4;
+    [ObservableProperty] private string? _interval = "1";
+    [ObservableProperty] private string? _packetSize = "32";
+    [ObservableProperty] private string? _timeout = "4";
     
     
     
@@ -32,11 +32,11 @@ public partial class PingOptionsViewModel : ViewModelBase
     {
         var settings = new Options()
         {
-            Interval = this.Interval,
-            PacketSize = this.PacketSize,
-            Timeout = this.Timeout
+            Interval = Double.Parse(this.Interval), // todo prevent null states
+            PacketSize = Int32.Parse(this.PacketSize),
+            Timeout = Double.Parse(this.Timeout)
         };
-        _pingRunner.Settings = new Options(Interval.Value, PacketSize.Value);
+        _pingRunner.Settings = settings;
         DialogHost.Close("Root");
     }
 }

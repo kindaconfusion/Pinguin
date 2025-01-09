@@ -8,7 +8,7 @@ public partial class Options : ObservableObject
 {
     [ObservableProperty] private double? _interval;
     [ObservableProperty] private int? _packetSize;
-    [ObservableProperty] private int? _timeout;
+    [ObservableProperty] private double? _timeout;
 
     public Options()
     {

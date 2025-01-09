@@ -5,19 +5,32 @@
         xmlns:vm="clr-namespace:Pinguin.ViewModels"
         x:Class="Pinguin.Views.PingOptionsView"
         x:DataType="vm:PingOptionsViewModel"
-        xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
+        xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+        xmlns:behaviors="clr-namespace:Pinguin.Behaviors">
         <StackPanel Margin="20" Spacing="5">
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping interval:"/>
-                        <TextBox Text="{Binding Interval, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding Interval, Mode=TwoWay}">
+                                <Interaction.Behaviors>
+                                        <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
+                                </Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock Margin="5 10 20 10 " Text="seconds"/>
                         <TextBlock Margin="5 10" Text="Packet size:"/>
-                        <TextBox Text="{Binding PacketSize, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding PacketSize, Mode=TwoWay}">
+                                <Interaction.Behaviors>
+                                        <behaviors:NumericInputBehavior AllowDecimal="False" AllowNegative="False" />
+                                </Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock Margin="5 10 20 10 " Text="bytes"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping timeout:"/>
-                        <TextBox Text="{Binding Timeout, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding Timeout, Mode=TwoWay}">
+                                <Interaction.Behaviors>
+                                        <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
+                                </Interaction.Behaviors>
+                        </TextBox>
                         <TextBlock Margin="5 10 20 10 " Text="seconds"/>
                 </StackPanel>
                 <Button HorizontalAlignment="Right" Command="{Binding SaveCommand}">Save</Button>
