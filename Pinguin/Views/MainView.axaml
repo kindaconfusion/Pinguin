@@ -26,11 +26,12 @@
     <dialogHostAvalonia:DialogHost Identifier="Root"
                            CloseOnClickAway="True">
         <dialogHostAvalonia:DialogHost.DialogContent>
-            <views:PingOptionsView/>
+            <ContentControl Content="{Binding Dialog}" />
         </dialogHostAvalonia:DialogHost.DialogContent>
         <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
+                <MenuItem Command="{Binding AddPingCommand}" Header="Add"/>
                 <MenuItem Command="{Binding OpenPingOptionsCommand}" Header="Ping Options"/>
             </MenuItem>
         </Menu>
