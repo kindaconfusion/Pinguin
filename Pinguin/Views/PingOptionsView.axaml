@@ -3,9 +3,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Pinguin.ViewModels"
-        mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600"
-        Height="600"
-        Width="600"
         x:Class="Pinguin.Views.PingOptionsView"
         x:DataType="vm:PingOptionsViewModel"
         xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
