@@ -11,6 +11,7 @@ namespace Pinguin.Models;
 
 public class PingRunner
 {
+    public Options Settings { get; set; } = new Options(1, 32);
     public RangeObservableCollection<PingObject> Pings { get; set; } = new RangeObservableCollection<PingObject>();
     public PingRunner(IEnumerable<PingObject>? pings)
     {
@@ -29,9 +30,37 @@ public class PingRunner
         }
     }
 
+    public async Task Tracert(string host)
+    {
+        //var end = Pings.Count;
+        //Pings.Insert(end, new PingObject(host));
+        var ping = new PingObject(host);
+        ping.IpAddress = await ResolveIp(host);
+        var trace = await Traceroute.RunTraceroute(ping);
+        foreach (var p in trace)
+        {
+            AddPing(p);
+        }
+    }
+
+    public async Task AddPing(string host)
+    {
+        var end = Pings.Count;
+        var ip = await ResolveIp(host);
+        var ping = new PingObject(host);
+        ping.IpAddress = ip;
+        Pings.Insert(end, ping);
+        Task thread = Task.Run(() => RunPing(end, Dispatcher.UIThread));
+    }
+    public async void AddPing(PingObject ping)
+    {
+        var end = Pings.Count;
+        Pings.Insert(end, ping);
+        Task thread = Task.Run(() => RunPing(end, Dispatcher.UIThread));
+    }
+
     private async Task RunPing(int index, Dispatcher dispatcher)
     {
-        await ResolveIp(index, dispatcher);
         var ping = Pings[index];
         while (true)
         {
@@ -48,35 +77,26 @@ public class PingRunner
         }
     }
     
-    public async Task ResolveIp(int index, Dispatcher dispatcher)
+    public async Task<IPAddress?> ResolveIp(string host)
     {
-        var ping = Pings[index];
-        ping.HostName.Trim().TrimEnd('\r', '\n');
+        host.Trim().TrimEnd('\r', '\n');
         try 
         {
-            if (!IPAddress.TryParse(ping.HostName, out IPAddress address))
+            if (!IPAddress.TryParse(host, out IPAddress address))
             {
-                var entry = await Dns.GetHostEntryAsync(ping.HostName);
+                var entry = await Dns.GetHostEntryAsync(host);
 
                 if (entry.AddressList.Length == 0)
                 {
-                    return;
+                    return null;
                 }
-                ping.IpAddress = entry.AddressList[0];
+                return entry.AddressList[0];
             }
-            else
-            {
-                ping.IpAddress = address;
-            }
-            await dispatcher.InvokeAsync(() =>
-            {
-                Pings[index] = ping;
-                Pings.NotifyChanges();
-            });
+                return address;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Thread {index}: Error occurred - {ex.GetType().Name}: {ex.Message}");
+            Console.WriteLine($"Error occurred while resolving IP - {ex.GetType().Name}: {ex.Message}");
             throw;
         }
     }
