@@ -34,7 +34,9 @@
                 <MenuItem Command="{Binding OpenPingOptionsCommand}" Header="Ping Options"/>
             </MenuItem>
         </Menu>
-        <DataGrid Theme="{StaticResource MyDataGrid}" CornerRadius="10" ClipToBounds="True" CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
+        <DataGrid Theme="{StaticResource MyDataGrid}" CornerRadius="10" ClipToBounds="True" GridLinesVisibility="All"
+                  CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" 
+                  Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Hostname" Binding="{Binding HostName}"/>
                 <DataGridTextColumn Header="IP Address" Binding="{Binding IpAddress}"/>
