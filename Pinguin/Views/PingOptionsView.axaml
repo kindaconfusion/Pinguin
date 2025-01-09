@@ -15,7 +15,12 @@
                         <TextBox Text="{Binding PacketSize, Mode=TwoWay}"/>
                         <TextBlock Margin="5 10 20 10 " Text="bytes"/>
                 </StackPanel>
-                <Button Command="{Binding SaveCommand}">Save</Button>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="5 10" Text="Ping timeout:"/>
+                        <TextBox Text="{Binding Timeout, Mode=TwoWay}"/>
+                        <TextBlock Margin="5 10 20 10 " Text="seconds"/>
+                </StackPanel>
+                <Button HorizontalAlignment="Right" Command="{Binding SaveCommand}">Save</Button>
         </StackPanel>
         
 </UserControl>

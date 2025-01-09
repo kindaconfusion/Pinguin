@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
@@ -12,7 +13,7 @@ namespace Pinguin.Models;
 
 public class PingRunner
 {
-    public Options Settings { get; set; } = new Options(1, 32);
+    public Options Settings { get; set; } = new ();
     public RangeObservableCollection<PingObject> Pings { get; set; } = new();
     
     private Dictionary<PingObject, CancellationTokenSource> _tasks = new();
@@ -87,10 +88,10 @@ public class PingRunner
                 cancel.ThrowIfCancellationRequested();
             }
             var ping = Pings.FirstOrDefault(p => p.IpAddress.Equals(inPing.IpAddress));
-            await Task.Delay(1000);
+            await Task.Delay((int) (Settings.Interval * 1000.0));
             using Ping p = new Ping();
             ping.PingsSent++;
-            var reply = await p.SendPingAsync(ping.IpAddress);
+            var reply = await p.SendPingAsync(ping.IpAddress, 2, Encoding.ASCII.GetBytes(GeneratePingContent(Settings.PacketSize.Value)));
             ping.AddReply(reply);
             dispatcher.Invoke(() =>
             {
@@ -121,6 +122,22 @@ public class PingRunner
         {
             Console.WriteLine($"Error occurred while resolving IP - {ex.GetType().Name}: {ex.Message}");
             throw;
+        }
+    }
+    
+    private string GeneratePingContent(int length)
+    {
+        const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (length <= alphabet.Length)
+        {
+            // If length is less than or equal to 26, truncate the alphabet
+            return alphabet.Substring(0, length);
+        }
+        else
+        {
+            // If length is greater than 26, repeat and truncate
+            return string.Concat(Enumerable.Repeat(alphabet, (length + alphabet.Length - 1) / alphabet.Length))
+                .Substring(0, length);
         }
     }
 }
