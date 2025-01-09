@@ -19,8 +19,8 @@ public class PingRunner
     private Dictionary<PingObject, CancellationTokenSource> _tasks = new();
     public PingRunner(IEnumerable<PingObject>? pings)
     {
-        if (pings != null)
-            Pings.ReplaceRange(pings);
+        //if (pings != null)
+            //Pings.ReplaceRange(pings);
     }
 
     [Obsolete("Use AddPing instead, for now...")]
@@ -37,11 +37,8 @@ public class PingRunner
 
     public async Task Tracert(string host)
     {
-        //var end = Pings.Count;
-        //Pings.Insert(end, new PingObject(host));
         var ping = new PingObject(host);
         ping.IpAddress = await ResolveIp(host);
-        //var trace = await Traceroute.RunTraceroute(ping);
         await foreach (var p in Traceroute.RunTraceroute(ping))
         {
             AddPing(p);
@@ -72,7 +69,7 @@ public class PingRunner
     public async void RemovePing(PingObject ping)
     {
         CancellationTokenSource token;
-        if (!_tasks.TryGetValue(ping, out token)) Console.WriteLine("Fuck");
+        if (!_tasks.TryGetValue(ping, out token)) return;
         token.Cancel();
         _tasks.Remove(ping);
         Pings.Remove(ping);
@@ -95,7 +92,6 @@ public class PingRunner
             ping.AddReply(reply);
             dispatcher.Invoke(() =>
             {
-                //Pings[index] = ping;
                 Pings.NotifyChanges();
             });
         }
