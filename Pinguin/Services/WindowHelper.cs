@@ -9,7 +9,7 @@ using Pinguin.ViewModels;
 
 namespace Pinguin.Services;
 
-[Obsolete]
+[Obsolete("Use DialogHost instead")]
 public static class WindowHelper
 {
     public static IServiceProvider ServiceProvider { get; private set; }

@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace Pinguin.Services;
 
-[Obsolete]
+[Obsolete("Use DialogHost instead")]
 public class WindowManager
 {
     private static readonly Dictionary<object, Visual> RegistrationMapper = new();
