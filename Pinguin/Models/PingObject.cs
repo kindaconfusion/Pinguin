@@ -43,7 +43,6 @@ public partial class PingObject : ObservableObject
             else
                 this.AveragePing = ((this.AveragePing * this.PingsReceived) + reply.RoundtripTime) / (this.PingsReceived+1);
             this.PingsReceived++;
-            Console.WriteLine(this.AveragePing);
         }
         else
         {
