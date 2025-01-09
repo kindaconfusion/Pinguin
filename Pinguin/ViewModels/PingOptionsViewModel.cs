@@ -12,9 +12,9 @@ namespace Pinguin.ViewModels;
 public partial class PingOptionsViewModel : ViewModelBase
 {
     
-    [ObservableProperty] private string? _interval = "1";
-    [ObservableProperty] private string? _packetSize = "32";
-    [ObservableProperty] private string? _timeout = "4";
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(SaveCommand))] private string? _interval = "1";
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(SaveCommand))] private string? _packetSize = "32";
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(SaveCommand))] private string? _timeout = "4";
     
     
     
@@ -25,14 +25,17 @@ public partial class PingOptionsViewModel : ViewModelBase
         _pingRunner = pingRunner;
     }
 
+    private bool CanSave()
+    {
+        return !String.IsNullOrWhiteSpace(Interval) && !String.IsNullOrWhiteSpace(PacketSize) && !String.IsNullOrWhiteSpace(Timeout);
+    }
     
-    
-    [RelayCommand]
+    [RelayCommand(CanExecute=nameof(CanSave))]
     public void Save()
     {
         var settings = new Options()
         {
-            Interval = Double.Parse(this.Interval), // todo prevent null states
+            Interval = Double.Parse(this.Interval),
             PacketSize = Int32.Parse(this.PacketSize),
             Timeout = Double.Parse(this.Timeout)
         };
