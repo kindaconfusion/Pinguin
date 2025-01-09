@@ -38,8 +38,6 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     public async Task OpenPingOptions()
     {
-        ///*var dingus = await this.OpenDialogAsync<PingOptionsViewModel>() as PingOptionsViewModel;
-        //*/
         Dialog = new PingOptionsViewModel(_pingRunner);
         await DialogHost.Show(Dialog);
     }
@@ -47,6 +45,6 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     public void DeletePing()
     {
-        _pingRunner.RemovePing(Pings[_selectedIndex]);
+        _pingRunner.RemovePing(Pings[SelectedIndex]);
     }
 }
