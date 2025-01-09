@@ -36,8 +36,8 @@ public class PingRunner
         //Pings.Insert(end, new PingObject(host));
         var ping = new PingObject(host);
         ping.IpAddress = await ResolveIp(host);
-        var trace = await Traceroute.RunTraceroute(ping);
-        foreach (var p in trace)
+        //var trace = await Traceroute.RunTraceroute(ping);
+        await foreach (var p in Traceroute.RunTraceroute(ping))
         {
             AddPing(p);
         }
@@ -92,7 +92,7 @@ public class PingRunner
                 }
                 return entry.AddressList[0];
             }
-                return address;
+            return address;
         }
         catch (Exception ex)
         {

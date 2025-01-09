@@ -11,7 +11,7 @@ namespace Pinguin.Models;
 
 public static class Traceroute
 {
-    public async static Task<List<PingObject>> RunTraceroute(PingObject host)
+    public async static IAsyncEnumerable<PingObject> RunTraceroute(PingObject host)
     {
         var traceroute = new List<PingObject>();
         var options = new PingOptions();
@@ -21,13 +21,29 @@ public static class Traceroute
             var cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             var sender = new Ping();
-            var reply = await sender.SendPingAsync(host.IpAddress, new TimeSpan(0, 0, 5), Encoding.ASCII.GetBytes("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), options, token);
-            if (reply.Status == IPStatus.Success || reply.Status == IPStatus.TtlExpired)
-                traceroute.Add(new PingObject(reply.Address));
-            
-            //Console.WriteLine(reply.Address);
+            var reply = await sender.SendPingAsync(host.IpAddress, new TimeSpan(0, 0, 1), Encoding.ASCII.GetBytes("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), options, token);
+            if (reply.Status is IPStatus.Success or IPStatus.TtlExpired)
+            {
+                var ping = new PingObject(reply.Address);
+                try
+                {
+                    var hostname = Dns.GetHostEntryAsync(reply.Address);
+                    var timeoutTask = Task.Delay(1000);
+                    
+                    if (await Task.WhenAny(hostname, timeoutTask) == hostname)
+                    {
+                        ping.HostName = hostname.Result.HostName;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error occurred while tracing - {ex.GetType().Name}: {ex.Message}");
+                }
+                yield return ping;
+                if (reply.Status == IPStatus.Success) break;
+            }
             options.Ttl++;
         }
-        return traceroute;
     }
 }
