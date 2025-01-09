@@ -49,6 +49,6 @@ public partial class PingObject : ObservableObject
         {
             this.PingsLost++;
         }
-        this.PingPercent = 1 - ((double) this.PingsReceived / this.PingsSent);
+        this.PingPercent = ((double) this.PingsLost) / (this.PingsSent);
     }
 }
