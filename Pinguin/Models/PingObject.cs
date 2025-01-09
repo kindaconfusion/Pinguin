@@ -33,6 +33,18 @@ public partial class PingObject : ObservableObject
         PingPercent = 0.0;
     }
 
+    public override bool Equals(object? obj)
+    {
+        var item = obj as PingObject;
+        if (item == null) return false;
+        return IpAddress == item.IpAddress || HostName == item.HostName;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(IpAddress);
+    }
+
 
     public void AddReply(PingReply reply)
     {

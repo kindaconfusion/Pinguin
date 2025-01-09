@@ -58,7 +58,6 @@ public partial class PingOptionsViewModel : ViewModelBase
     [RelayCommand]
     public void Save()
     {
-        
         //_dialogResult.SetResult(Options);
         DialogHost.Close("Root", Options);
         //RaiseClose();

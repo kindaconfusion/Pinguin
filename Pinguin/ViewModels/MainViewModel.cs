@@ -13,6 +13,8 @@ namespace Pinguin.ViewModels;
 public partial class MainViewModel : ViewModelBase
 {
     [ObservableProperty] private Options _options;
+    
+    [ObservableProperty] private int _selectedIndex;
 
     private readonly PingRunner _pingRunner;
     
@@ -30,5 +32,11 @@ public partial class MainViewModel : ViewModelBase
         */
         var vm = new PingOptionsViewModel(_pingRunner);
         await DialogHost.Show(vm);
+    }
+
+    [RelayCommand]
+    public void DeletePing()
+    {
+        _pingRunner.RemovePing(Pings[_selectedIndex]);
     }
 }

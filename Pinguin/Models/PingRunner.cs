@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -12,13 +13,16 @@ namespace Pinguin.Models;
 public class PingRunner
 {
     public Options Settings { get; set; } = new Options(1, 32);
-    public RangeObservableCollection<PingObject> Pings { get; set; } = new RangeObservableCollection<PingObject>();
+    public RangeObservableCollection<PingObject> Pings { get; set; } = new();
+    
+    private Dictionary<PingObject, CancellationTokenSource> _tasks = new();
     public PingRunner(IEnumerable<PingObject>? pings)
     {
         if (pings != null)
             Pings.ReplaceRange(pings);
     }
 
+    [Obsolete("Use AddPing instead, for now...")]
     public void ReplacePings(IEnumerable<PingObject> pings)
     {
         Pings.ReplaceRange(pings);
@@ -26,7 +30,7 @@ public class PingRunner
         for (int i = 0; i < Pings.Count; i++)
         {
             int index = i;
-            threads[i] = Task.Run(() => RunPing(index, Dispatcher.UIThread));
+            //threads[i] = Task.Run(() => RunPing(index, Dispatcher.UIThread));
         }
     }
 
@@ -50,20 +54,39 @@ public class PingRunner
         var ping = new PingObject(host);
         ping.IpAddress = ip;
         Pings.Insert(end, ping);
-        Task thread = Task.Run(() => RunPing(end, Dispatcher.UIThread));
+        var cts = new CancellationTokenSource();
+        _tasks.Add(ping, cts);
+        Task.Run(() => RunPing(ping, cts.Token, Dispatcher.UIThread));
     }
+    
     public async void AddPing(PingObject ping)
     {
         var end = Pings.Count;
         Pings.Insert(end, ping);
-        Task thread = Task.Run(() => RunPing(end, Dispatcher.UIThread));
+        var cts = new CancellationTokenSource();
+        _tasks.Add(ping, cts);
+        Task.Run(() => RunPing(ping, cts.Token, Dispatcher.UIThread));
     }
 
-    private async Task RunPing(int index, Dispatcher dispatcher)
+    public async void RemovePing(PingObject ping)
     {
-        var ping = Pings[index];
+        CancellationTokenSource token;
+        if (!_tasks.TryGetValue(ping, out token)) Console.WriteLine("Fuck");
+        token.Cancel();
+        _tasks.Remove(ping);
+        Pings.Remove(ping);
+    }
+
+    private async Task RunPing(PingObject inPing, CancellationToken cancel, Dispatcher dispatcher)
+    {
         while (true)
         {
+            if (cancel.IsCancellationRequested)
+            {
+                Console.WriteLine("Stopping ping.");
+                cancel.ThrowIfCancellationRequested();
+            }
+            var ping = Pings.FirstOrDefault(p => p.IpAddress.Equals(inPing.IpAddress));
             await Task.Delay(1000);
             using Ping p = new Ping();
             ping.PingsSent++;
@@ -71,7 +94,7 @@ public class PingRunner
             ping.AddReply(reply);
             dispatcher.Invoke(() =>
             {
-                Pings[index] = ping;
+                //Pings[index] = ping;
                 Pings.NotifyChanges();
             });
         }

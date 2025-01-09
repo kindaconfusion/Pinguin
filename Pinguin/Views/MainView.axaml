@@ -35,12 +35,17 @@
             </MenuItem>
         </Menu>
         <DataGrid Theme="{StaticResource MyDataGrid}" CornerRadius="10" ClipToBounds="True" GridLinesVisibility="All"
-                  CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" 
+                  CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" SelectedIndex="{Binding SelectedIndex}"
                   Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
+            <DataGrid.ContextFlyout>
+                <MenuFlyout>
+                    <MenuItem Header="Remove" Command="{Binding DeletePingCommand}"/>
+                </MenuFlyout>
+            </DataGrid.ContextFlyout>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Hostname" Binding="{Binding HostName}"/>
                 <DataGridTextColumn Header="IP Address" Binding="{Binding IpAddress}"/>
-                <DataGridTextColumn Header="Pings Sent" Binding="{Binding PingsSent}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Pings Sent" Binding="{Binding PingsSent}"/>
                 <DataGridTextColumn Header="Responses Received" Binding="{Binding PingsReceived}"/>
                 <DataGridTextColumn Header="Pings Failed" Binding="{Binding PingsLost}"/>
                 <DataGridTextColumn Header="Percent Failures" Binding="{Binding PingPercent, StringFormat={}{0:P}}"/>
