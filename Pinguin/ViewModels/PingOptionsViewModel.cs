@@ -43,7 +43,16 @@ public partial class PingOptionsViewModel : ViewModelBase
     {
         await _pingRunner.Tracert(HostName);
         HostName = string.Empty;
-        DialogHost.Close("Root", Options);
+        try
+        {
+            DialogHost.Close("Root", Options);
+        }
+        catch (InvalidOperationException ex)
+        {
+            // the user closed the dialog before the traceroute completed.
+            // this is acceptable
+            // (there may be a cleaner way to do this but i think it's fine this way)
+        }
     }
     
     [RelayCommand]
