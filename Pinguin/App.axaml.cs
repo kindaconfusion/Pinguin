@@ -29,9 +29,10 @@ public partial class App : Application
             var services = collection.BuildServiceProvider();
             WindowHelper.Initialize(services);
             DisableAvaloniaDataAnnotationValidation();
+            var vm = services.GetRequiredService<MainViewModel>();
             desktop.MainWindow = new MainView
             {
-                DataContext = new MainViewModel(),
+                DataContext = vm
             };
         }
 

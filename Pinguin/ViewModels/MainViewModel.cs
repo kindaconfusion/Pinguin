@@ -14,18 +14,21 @@ public partial class MainViewModel : ViewModelBase
 {
     [ObservableProperty] private Options _options;
 
-    private PingRunner runner = new PingRunner(null);
+    private readonly PingRunner _pingRunner;
     
-    public RangeObservableCollection<PingObject> Pings => runner.Pings;
-    
+    public RangeObservableCollection<PingObject> Pings => _pingRunner.Pings;
+
+    public MainViewModel(PingRunner pingRunner)
+    {
+        _pingRunner = pingRunner;
+    }
     
     [RelayCommand]
     public async Task OpenPingOptions()
     {
         /*var dingus = await this.OpenDialogAsync<PingOptionsViewModel>() as PingOptionsViewModel;
         */
-        
-        var dicks = await DialogHost.Show(new PingOptionsViewModel()) as Options;
-        if (dicks != null) runner.ReplacePings(dicks.HostNames.Select(h => new PingObject(h)));
+        var vm = new PingOptionsViewModel(_pingRunner);
+        await DialogHost.Show(vm);
     }
 }
