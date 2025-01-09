@@ -19,8 +19,5 @@ public partial class PingOptionsView : UserControl
     }
     
 
-    /*private void Save_OnClick(object? sender, RoutedEventArgs e)
-    {
-        
-    }*/
+
 }

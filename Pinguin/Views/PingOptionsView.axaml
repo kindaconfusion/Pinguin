@@ -9,10 +9,15 @@
         x:Class="Pinguin.Views.PingOptionsView"
         x:DataType="vm:PingOptionsViewModel"
         xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
-
-                        <StackPanel Margin="10" Spacing="5">
-                <TextBlock Margin="3 0 0 0" Text="Ping hosts:"/>
-                <TextBox AcceptsReturn="True" Height="200" Text="{Binding HostNames, Mode=TwoWay}"></TextBox>
+        <StackPanel Margin="10" Spacing="5">
+                <TextBox  Watermark="Host" Text="{Binding HostName, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal">
+                        
+                        <Button VerticalContentAlignment="Center" Command="{Binding AddHostCommand}"
+                                Margin="0">Add Host</Button>
+                        <Button VerticalContentAlignment="Center" Command="{Binding AddTraceRouteCommand}"
+                                Margin="10 0">Traceroute</Button>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping interval:"/>
                         <TextBox Text="{Binding Interval, Mode=TwoWay}"/>
