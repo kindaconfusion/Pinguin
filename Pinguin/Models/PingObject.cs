@@ -38,7 +38,6 @@ public partial class PingObject : ObservableObject
     {
         if (reply.Status == IPStatus.Success)
         {
-            Console.WriteLine(reply.RoundtripTime);
             if (this.AveragePing is null)
                 this.AveragePing = reply.RoundtripTime;
             else
