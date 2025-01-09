@@ -41,7 +41,7 @@
                 <DataGridTextColumn Header="Pings Sent" Binding="{Binding PingsSent}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Responses Received" Binding="{Binding PingsReceived}"/>
                 <DataGridTextColumn Header="Pings Failed" Binding="{Binding PingsLost}"/>
-                <DataGridTextColumn Header="Percent Failures" Binding="{Binding PingPercent}"/>
+                <DataGridTextColumn Header="Percent Failures" Binding="{Binding PingPercent, StringFormat={}{0:P}}"/>
                 <DataGridTextColumn Header="Average RTT" Binding="{Binding AveragePing, StringFormat={}{0:0.00}}"/>
             </DataGrid.Columns>
         </DataGrid>
