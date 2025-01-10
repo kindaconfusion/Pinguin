@@ -10,6 +10,7 @@
             PrimaryButtonText="Add Host"
                              PrimaryButtonCommand="{Binding AddHostCommand}"
             SecondaryButtonText="Traceroute"
-                             SecondaryButtonCommand="{Binding AddTraceRouteCommand}">
+                             SecondaryButtonCommand="{Binding AddTraceRouteCommand}"
+                             CloseButtonText="Cancel">
         <TextBox  Watermark="Host" Text="{Binding HostName, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged"/>
 </controls:ContentDialog>

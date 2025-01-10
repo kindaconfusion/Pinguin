@@ -9,7 +9,8 @@
         xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         Title="Ping Options"
         PrimaryButtonText="Save"
-        PrimaryButtonCommand="{Binding SaveCommand}">
+        PrimaryButtonCommand="{Binding SaveCommand}"
+        CloseButtonText="Cancel">
         <StackPanel Margin="10" Spacing="5">
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping interval:"/>
