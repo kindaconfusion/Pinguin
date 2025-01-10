@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="Pinguin.Views.MainView"
         x:DataType="vm:MainViewModel"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
         xmlns:services="clr-namespace:Pinguin.Services"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
         xmlns:windowing="clr-namespace:FluentAvalonia.UI.Windowing;assembly=FluentAvalonia"
@@ -14,15 +15,10 @@
         Background="#1E000000"
         Icon="/Assets/avalonia-logo.ico"
         Title="Pinguin">
-
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel/>
-    </Design.DataContext>
+    
 
     
-        <Grid RowDefinitions="Auto, Auto, 17*, 6*">
+        <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*">
             <controls:CommandBar Grid.Row="1" DefaultLabelPosition="Right">
                 <controls:CommandBar.PrimaryCommands>
                     <controls:CommandBarButton IconSource="Add" Click="AddButtonOnClick" Label="Add"/>
@@ -47,6 +43,7 @@
                 <DataGridTextColumn Header="Average RTT" Binding="{Binding AveragePing, StringFormat={}{0:0.00}}"/>
             </DataGrid.Columns>
         </DataGrid>
-            <lvc:CartesianChart Grid.Row="3" />
+            <GridSplitter Grid.Row="3" Margin="10 5" Opacity=".4"/>
+            <lvc:CartesianChart Grid.Row="4" />
     </Grid>
 </windowing:AppWindow>
