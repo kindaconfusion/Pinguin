@@ -8,22 +8,24 @@ namespace Pinguin.ViewModels;
 
 public partial class AddViewModel : ViewModelBase
 {
-    [ObservableProperty] private string? _hostName;
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddHostCommand), nameof(AddTraceRouteCommand))] private string? _hostName;
     private readonly PingRunner _pingRunner;
+    
+    private bool CanAdd() { return !string.IsNullOrWhiteSpace(HostName); }
     
     public AddViewModel(PingRunner pingRunner)
     {
         _pingRunner = pingRunner;
     }
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanAdd))]
     public void AddHost()
     {
         _pingRunner.AddPing(HostName);
         HostName = string.Empty;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanAdd))]
     public async Task AddTraceRoute()
     {
         await _pingRunner.Tracert(HostName);
