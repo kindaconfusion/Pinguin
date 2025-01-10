@@ -10,9 +10,9 @@ using Pinguin.ViewModels;
 
 namespace Pinguin.Views;
 
-public partial class AddView : ContentDialog, IStyleable
+public partial class AddView : ContentDialog
 {
-    Type IStyleable.StyleKey => typeof(ContentDialog);
+    protected override Type StyleKeyOverride => typeof(ContentDialog);
     public AddView()
     {
         InitializeComponent();
