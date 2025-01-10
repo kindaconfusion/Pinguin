@@ -33,6 +33,6 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     public void DeletePing()
     {
-        _pingRunner.RemovePing(Pings[SelectedIndex]);
+        if (Pings.ElementAtOrDefault(SelectedIndex) != null) _pingRunner.RemovePing(Pings[SelectedIndex]);
     }
 }

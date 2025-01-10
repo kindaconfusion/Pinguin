@@ -28,7 +28,7 @@
         <DataGrid Grid.Row="2" CornerRadius="10" ClipToBounds="True" GridLinesVisibility="All"  
                   CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" SelectedIndex="{Binding SelectedIndex}"
                   Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
-            <DataGrid.ContextFlyout>
+            <DataGrid.ContextFlyout> <!-- TODO don't open flyout if nothing is selected -->
                 <MenuFlyout>
                     <MenuItem Header="Remove" Command="{Binding DeletePingCommand}"/>
                 </MenuFlyout>
