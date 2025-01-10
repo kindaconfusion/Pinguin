@@ -2,8 +2,11 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Windowing;
 using Pinguin.Models;
@@ -33,15 +36,24 @@ public partial class MainView : AppWindow
     }
     private void PingGrid_OnContextRequested(object? sender, ContextRequestedEventArgs e)
     {
-        var context = DataContext as MainViewModel;
-        if (context.Pings.ElementAtOrDefault(context.SelectedIndex) != null)
+        Point position;
+        e.TryGetPosition(sender as DataGrid, out position);
+        var hitTestResult = PingGrid.InputHitTest(position);
+        if (hitTestResult is Visual visualElement)
         {
-            var flyout = new MenuFlyout
+            var dataGridRow = visualElement.GetVisualAncestors()
+                .OfType<DataGridRow>()
+                .FirstOrDefault();
+            var context = DataContext as MainViewModel;
+            if (dataGridRow != null)
             {
-                Items = {new MenuItem {Header = "Remove", Command = context.DeletePingCommand}},
-                
-            };
-            flyout.ShowAt(sender as Control, true);
+                var flyout = new MenuFlyout
+                {
+                    Items = {new MenuItem {Header = "Remove", Command = context.DeletePingCommand}},
+
+                };
+                flyout.ShowAt(sender as Control, true);
+            }
         }
         e.Handled = true;
     }
