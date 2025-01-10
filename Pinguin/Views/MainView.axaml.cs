@@ -1,4 +1,6 @@
 
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -28,5 +30,19 @@ public partial class MainView : AppWindow
     {
         var dialog = new PingOptionsView();
         dialog.ShowAsync();
+    }
+    private void PingGrid_OnContextRequested(object? sender, ContextRequestedEventArgs e)
+    {
+        var context = DataContext as MainViewModel;
+        if (context.Pings.ElementAtOrDefault(context.SelectedIndex) != null)
+        {
+            var flyout = new MenuFlyout
+            {
+                Items = {new MenuItem {Header = "Remove", Command = context.DeletePingCommand}},
+                
+            };
+            flyout.ShowAt(sender as Control, true);
+        }
+        e.Handled = true;
     }
 }
