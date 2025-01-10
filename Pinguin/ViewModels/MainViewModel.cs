@@ -2,12 +2,14 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DialogHostAvalonia;
+using FluentAvalonia.UI.Controls;
 using Pinguin.Models;
 using Pinguin.Services;
 using Pinguin.Views;
+using DialogHost = DialogHostAvalonia.DialogHost;
 
 namespace Pinguin.ViewModels;
 
@@ -31,8 +33,15 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     public async Task AddPing()
     {
-        Dialog = new AddViewModel(_pingRunner);
-        await DialogHost.Show(Dialog);
+        //Dialog = new AddViewModel(_pingRunner);
+        var vm = new AddViewModel(_pingRunner);
+        var dialog = new TaskDialog
+        {
+            Content = new ViewLocator().Build(vm),
+            DataContext = vm
+        };
+        //dialog.XamlRoot = TopLevel.GetTopLevel(this);
+        await dialog.ShowAsync();
     }
     
     [RelayCommand]

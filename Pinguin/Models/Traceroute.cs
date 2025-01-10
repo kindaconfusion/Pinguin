@@ -34,12 +34,17 @@ public static class Traceroute
                     {
                         ping.HostName = hostname.Result.HostName;
                     }
-
+                    else
+                    {
+                        ping.HostName = reply.Address.ToString();
+                    }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error occurred while tracing - {ex.GetType().Name}: {ex.Message}");
                 }
+                
+                traceroute.Add(ping);
                 yield return ping;
                 if (reply.Status == IPStatus.Success) break;
             }

@@ -11,5 +11,6 @@ public static class ServiceCollectionExtensions
         collection.AddTransient<MainViewModel>();
         collection.AddSingleton<PingOptionsViewModel>();
         collection.AddSingleton<PingRunner>();
+        collection.AddTransient<AddViewModel>();
     }
 }

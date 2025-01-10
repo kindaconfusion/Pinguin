@@ -47,11 +47,10 @@ public class PingRunner
 
     public async Task AddPing(string host)
     {
-        var end = Pings.Count;
         var ip = await ResolveIp(host);
         var ping = new PingObject(host);
         ping.IpAddress = ip;
-        Pings.Insert(end, ping);
+        Pings.Add(ping);
         var cts = new CancellationTokenSource();
         _tasks.Add(ping, cts);
         Task.Run(() => RunPing(ping, cts.Token));
@@ -59,8 +58,7 @@ public class PingRunner
     
     public async void AddPing(PingObject ping)
     {
-        var end = Pings.Count;
-        Pings.Insert(end, ping);
+        Pings.Add(ping);
         var cts = new CancellationTokenSource();
         _tasks.Add(ping, cts);
         Task.Run(() => RunPing(ping, cts.Token));
@@ -75,7 +73,7 @@ public class PingRunner
         Pings.Remove(ping);
     }
 
-    private async Task RunPing(PingObject inPing, CancellationToken cancel)
+    private async Task RunPing(PingObject ping, CancellationToken cancel)
     {
         while (true)
         {
@@ -84,7 +82,7 @@ public class PingRunner
                 Console.WriteLine("Stopping ping.");
                 cancel.ThrowIfCancellationRequested();
             }
-            var ping = Pings.FirstOrDefault(p => p.IpAddress.Equals(inPing.IpAddress));
+            //var ping = Pings.FirstOrDefault(p => p.IpAddress.Equals(inPing.IpAddress));
             await Task.Delay((int) (Settings.Interval * 1000.0));
             using Ping p = new Ping();
             ping.PingsSent++;

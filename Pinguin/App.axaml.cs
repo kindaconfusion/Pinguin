@@ -24,9 +24,11 @@ public partial class App : Application
         {
             var collection = new ServiceCollection();
             collection.AddCommonServices();
+            
 
             // Creates a ServiceProvider containing services from the provided IServiceCollection
             var services = collection.BuildServiceProvider();
+            ServiceLocator.Instance = services; // bad practice? suck my DICK AND BALLS
             WindowHelper.Initialize(services);
             DisableAvaloniaDataAnnotationValidation();
             var vm = services.GetRequiredService<MainViewModel>();

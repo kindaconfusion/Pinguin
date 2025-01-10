@@ -7,7 +7,7 @@
         x:DataType="vm:PingOptionsViewModel"
         xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
         xmlns:behaviors="clr-namespace:Pinguin.Behaviors">
-        <StackPanel Margin="20" Spacing="5">
+        <StackPanel Margin="10" Spacing="5">
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping interval:"/>
                         <TextBox Text="{Binding Interval, Mode=TwoWay}">
