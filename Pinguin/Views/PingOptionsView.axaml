@@ -13,14 +13,14 @@
         <StackPanel Margin="10" Spacing="5">
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping interval:"/>
-                        <TextBox Text="{Binding Interval, Mode=TwoWay}">
+                        <TextBox Text="{Binding Interval, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
                                 <Interaction.Behaviors>
                                         <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
                                 </Interaction.Behaviors>
                         </TextBox>
                         <TextBlock Margin="5 10 20 10 " Text="seconds"/>
                         <TextBlock Margin="5 10" Text="Packet size:"/>
-                        <TextBox Text="{Binding PacketSize, Mode=TwoWay}">
+                        <TextBox Text="{Binding PacketSize, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
                                 <Interaction.Behaviors>
                                         <behaviors:NumericInputBehavior AllowDecimal="False" AllowNegative="False" />
                                 </Interaction.Behaviors>
@@ -29,7 +29,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping timeout:"/>
-                        <TextBox Text="{Binding Timeout, Mode=TwoWay}">
+                        <TextBox Text="{Binding Timeout, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
                                 <Interaction.Behaviors>
                                         <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
                                 </Interaction.Behaviors>

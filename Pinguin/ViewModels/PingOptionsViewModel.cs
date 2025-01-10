@@ -24,7 +24,7 @@ public partial class PingOptionsViewModel : ViewModelBase
         _pingRunner = pingRunner;
     }
 
-    private bool CanSave()
+    public bool CanSave()
     {
         return !String.IsNullOrWhiteSpace(Interval) && !String.IsNullOrWhiteSpace(PacketSize) && !String.IsNullOrWhiteSpace(Timeout);
     }

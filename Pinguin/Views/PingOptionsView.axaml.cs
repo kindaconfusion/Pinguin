@@ -18,8 +18,17 @@ public partial class PingOptionsView : ContentDialog
     {
         InitializeComponent();
         DataContext = ServiceLocator.Instance.GetService(typeof(PingOptionsViewModel));
+        IsPrimaryButtonEnabled = false;
+        IsSecondaryButtonEnabled = false;
     }
     
-
+    private void TextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+        {
+            IsPrimaryButtonEnabled = (DataContext as PingOptionsViewModel).CanSave();
+        }
+        
+    }
 
 }
