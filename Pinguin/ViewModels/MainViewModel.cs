@@ -9,7 +9,6 @@ using FluentAvalonia.UI.Controls;
 using Pinguin.Models;
 using Pinguin.Services;
 using Pinguin.Views;
-using DialogHost = DialogHostAvalonia.DialogHost;
 
 namespace Pinguin.ViewModels;
 
@@ -29,27 +28,7 @@ public partial class MainViewModel : ViewModelBase
     {
         _pingRunner = pingRunner;
     }
-
-    [RelayCommand]
-    public async Task AddPing()
-    {
-        //Dialog = new AddViewModel(_pingRunner);
-        var vm = new AddViewModel(_pingRunner);
-        var dialog = new TaskDialog
-        {
-            Content = new ViewLocator().Build(vm),
-            DataContext = vm
-        };
-        //dialog.XamlRoot = TopLevel.GetTopLevel(this);
-        await dialog.ShowAsync();
-    }
     
-    [RelayCommand]
-    public async Task OpenPingOptions()
-    {
-        Dialog = new PingOptionsViewModel(_pingRunner);
-        await DialogHost.Show(Dialog);
-    }
 
     [RelayCommand]
     public void DeletePing()

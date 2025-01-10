@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DialogHostAvalonia;
 using Pinguin.Models;
 
 namespace Pinguin.ViewModels;
@@ -31,7 +30,7 @@ public partial class AddViewModel : ViewModelBase
         HostName = string.Empty;
         try
         {
-            DialogHost.Close("Root");
+            //DialogHost.Close("Root");
         }
         catch (InvalidOperationException ex)
         {

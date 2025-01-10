@@ -4,7 +4,6 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DialogHostAvalonia;
 using Pinguin.Models;
 
 namespace Pinguin.ViewModels;
@@ -40,6 +39,5 @@ public partial class PingOptionsViewModel : ViewModelBase
             Timeout = Double.Parse(this.Timeout)
         };
         _pingRunner.Settings = settings;
-        DialogHost.Close("Root");
     }
 }

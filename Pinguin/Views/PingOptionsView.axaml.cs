@@ -1,17 +1,23 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using DialogHostAvalonia;
+using Avalonia.Styling;
+using FluentAvalonia.UI.Controls;
+using Pinguin.Services;
+using Pinguin.ViewModels;
 
 namespace Pinguin.Views;
 
-public partial class PingOptionsView : UserControl
+public partial class PingOptionsView : ContentDialog
 {
+    protected override Type StyleKeyOverride => typeof(ContentDialog);
     public PingOptionsView()
     {
-        AvaloniaXamlLoader.Load(this);
+        InitializeComponent();
+        DataContext = ServiceLocator.Instance.GetService(typeof(PingOptionsViewModel));
     }
     
 

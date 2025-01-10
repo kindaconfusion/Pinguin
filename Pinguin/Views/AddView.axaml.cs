@@ -15,7 +15,7 @@ public partial class AddView : ContentDialog, IStyleable
     Type IStyleable.StyleKey => typeof(ContentDialog);
     public AddView()
     {
-        AvaloniaXamlLoader.Load(this);
+        InitializeComponent();
         DataContext = ServiceLocator.Instance.GetService(typeof(AddViewModel));
     }
 }

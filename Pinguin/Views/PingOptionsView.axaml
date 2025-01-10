@@ -1,12 +1,15 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+﻿<controls:ContentDialog xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Pinguin.ViewModels"
         x:Class="Pinguin.Views.PingOptionsView"
         x:DataType="vm:PingOptionsViewModel"
-        xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-        xmlns:behaviors="clr-namespace:Pinguin.Behaviors">
+        xmlns:behaviors="clr-namespace:Pinguin.Behaviors"
+        xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+        Title="Ping Options"
+        PrimaryButtonText="Save"
+        PrimaryButtonCommand="{Binding SaveCommand}">
         <StackPanel Margin="10" Spacing="5">
                 <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 10" Text="Ping interval:"/>
@@ -33,7 +36,6 @@
                         </TextBox>
                         <TextBlock Margin="5 10 20 10 " Text="seconds"/>
                 </StackPanel>
-                <Button HorizontalAlignment="Right" Command="{Binding SaveCommand}">Save</Button>
         </StackPanel>
         
-</UserControl>
+</controls:ContentDialog>

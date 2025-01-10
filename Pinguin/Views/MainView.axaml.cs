@@ -19,9 +19,14 @@ public partial class MainView : AppWindow
         InitializeComponent();
     }
 
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
+    private void AddButtonOnClick(object? sender, RoutedEventArgs e)
     {
         var dialog = new AddView();
+        dialog.ShowAsync();
+    }
+    private void OptionsButtonOnClick(object? sender, RoutedEventArgs e)
+    {
+        var dialog = new PingOptionsView();
         dialog.ShowAsync();
     }
 }

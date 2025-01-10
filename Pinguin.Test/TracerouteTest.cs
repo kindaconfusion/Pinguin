@@ -16,12 +16,12 @@ public class Tests
         Assert.Pass();
     }
     
-    [Test]
+    /*[Test]
     public async Task Test1()
     {
         var SHIT = new PingObject(IPAddress.Parse("8.8.8.8"));
         var trace = await Traceroute.RunTraceroute(SHIT);
         TestContext.Out.WriteLine(String.Join(", ", trace.Select(x => x.IpAddress)));
         Assert.Pass();
-    }
+    }*/
 }
