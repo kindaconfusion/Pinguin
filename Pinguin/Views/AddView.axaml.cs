@@ -15,7 +15,19 @@ public partial class AddView : ContentDialog
     protected override Type StyleKeyOverride => typeof(ContentDialog);
     public AddView()
     {
-        InitializeComponent();
+        AvaloniaXamlLoader.Load(this);
         DataContext = ServiceLocator.Instance.GetService(typeof(AddViewModel));
+        IsPrimaryButtonEnabled = false;
+        IsSecondaryButtonEnabled = false;
+    }
+
+    private void TextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+        {
+            IsPrimaryButtonEnabled = !String.IsNullOrEmpty(textBox.Text);
+            IsSecondaryButtonEnabled = !String.IsNullOrEmpty(textBox.Text);
+        }
+        
     }
 }
