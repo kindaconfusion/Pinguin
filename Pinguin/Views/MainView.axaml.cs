@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -9,10 +10,10 @@ using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Windowing;
+using LiveChartsCore.SkiaSharpView;
 using Pinguin.Models;
 using Pinguin.ViewModels;
-using ScottPlot;
-using ScottPlot.Avalonia;
+
 
 namespace Pinguin.Views;
 
@@ -22,6 +23,9 @@ public partial class MainView : AppWindow
     public MainView()
     {
         InitializeComponent();
+        DaChart.XAxes = new List<Axis>{new Axis {MinStep = 1}};
+        DaChart.YAxes = new List<Axis> {new Axis
+        { MinStep = 1 }};
     }
 
     private void AddButtonOnClick(object? sender, RoutedEventArgs e)
@@ -49,8 +53,11 @@ public partial class MainView : AppWindow
             {
                 var flyout = new MenuFlyout
                 {
-                    Items = {new MenuItem {Header = "Remove", Command = context.DeletePingCommand}},
-
+                    Items =
+                    {
+                        new MenuItem {Header = "Remove", Command = context.DeletePingCommand},
+                        new MenuItem {Header = "Open Graph", Command = context.OpenGraphCommand, CommandParameter = dataGridRow.DataContext as PingObject }
+                    },
                 };
                 flyout.ShowAt(sender as Control, true);
             }

@@ -44,6 +44,6 @@
             </DataGrid.Columns>
         </DataGrid>
             <GridSplitter Grid.Row="3" Margin="10 5" Opacity=".4"/>
-            <lvc:CartesianChart Grid.Row="4" />
+            <lvc:CartesianChart Name="DaChart" Series="{Binding Series}" Grid.Row="4"/>
     </Grid>
 </windowing:AppWindow>

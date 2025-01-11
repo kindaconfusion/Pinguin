@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 namespace Pinguin.Models;
 
@@ -14,12 +19,26 @@ public partial class PingObject : ObservableObject
     [ObservableProperty] private int? _pingsLost;
     [ObservableProperty] private double? _pingPercent;
     [ObservableProperty] private double? _averagePing;
+    [ObservableProperty] private ISeries[] _series;
+    public ObservableCollection<long?> LineSeries;
+    public ObservableCollection<long?> BarSeries;
+
     public PingObject()
     {
         PingsSent = 0;
         PingsReceived = 0;
         PingsLost = 0;
-        PingPercent = 0.0;
+        Series = new ISeries[]
+        {
+            new LineSeries<long?>
+            {
+                Values = LineSeries = new ObservableCollection<long?>(),
+            },
+            new ColumnSeries<long?>
+            {
+                Values = BarSeries = new ObservableCollection<long?>(),
+            }
+        };
     }
 
     public override bool Equals(object? obj)
@@ -39,16 +58,29 @@ public partial class PingObject : ObservableObject
     {
         if (reply.Status == IPStatus.Success)
         {
-            if (this.AveragePing is null)
-                this.AveragePing = reply.RoundtripTime;
+            if (AveragePing is null)
+                AveragePing = reply.RoundtripTime;
             else
-                this.AveragePing = ((this.AveragePing * this.PingsReceived) + reply.RoundtripTime) / (this.PingsReceived+1);
-            this.PingsReceived++;
+                AveragePing = (AveragePing * PingsReceived + reply.RoundtripTime) / (PingsReceived+1);
+            PingsReceived++;
+            BarSeries.Add(null);
+            if (LineSeries.Count > 0 && reply.RoundtripTime > LineSeries.Max())
+            {
+                for (int i = 0; i < BarSeries.Count; i++)
+                {
+                    if (BarSeries[i] is not null)
+                        BarSeries[i] = reply.RoundtripTime;
+                }
+            }
+            LineSeries.Add(reply.RoundtripTime);
+            
         }
         else
         {
-            this.PingsLost++;
+            PingsLost++;
+            LineSeries.Add(null);
+            BarSeries.Add(LineSeries.Max());
         }
-        this.PingPercent = ((double) this.PingsLost) / (this.PingsSent);
+        PingPercent = (double) PingsLost / PingsSent;
     }
 }
