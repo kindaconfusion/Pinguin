@@ -24,7 +24,7 @@ public static class Traceroute
             var reply = await sender.SendPingAsync(host.IpAddress, new TimeSpan(0, 0, 1), Encoding.ASCII.GetBytes("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), options, token);
             if (reply.Status is IPStatus.Success or IPStatus.TtlExpired)
             {
-                var ping = new PingObject(reply.Address);
+                var ping = new PingObject { IpAddress = host.IpAddress };
                 try
                 {
                     var hostname = Dns.GetHostEntryAsync(reply.Address);

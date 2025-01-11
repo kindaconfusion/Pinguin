@@ -14,21 +14,10 @@ public partial class PingObject : ObservableObject
     [ObservableProperty] private int? _pingsLost;
     [ObservableProperty] private double? _pingPercent;
     [ObservableProperty] private double? _averagePing;
-    
-    public PingObject(string hostName)
+    public PingObject()
     {
-        _hostName = hostName;
-        PingsReceived = 0;
         PingsSent = 0;
-        PingsLost = 0;
-        PingPercent = 0.0;
-    }
-    
-    public PingObject(IPAddress ipAddress)
-    {
-        _ipAddress = ipAddress;
         PingsReceived = 0;
-        PingsSent = 0;
         PingsLost = 0;
         PingPercent = 0.0;
     }

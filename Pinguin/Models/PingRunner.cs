@@ -37,7 +37,7 @@ public class PingRunner
 
     public async Task Tracert(string host)
     {
-        var ping = new PingObject(host);
+        var ping = new PingObject {HostName = host};
         ping.IpAddress = await ResolveIp(host);
         await foreach (var p in Traceroute.RunTraceroute(ping))
         {
@@ -48,7 +48,7 @@ public class PingRunner
     public async Task AddPing(string host)
     {
         var ip = await ResolveIp(host);
-        var ping = new PingObject(host);
+        var ping = new PingObject {HostName = host};
         ping.IpAddress = ip;
         Pings.Add(ping);
         var cts = new CancellationTokenSource();
