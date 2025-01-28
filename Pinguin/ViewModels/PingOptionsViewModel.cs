@@ -36,7 +36,7 @@ public partial class PingOptionsViewModel : ViewModelBase
         {
             Interval = Double.Parse(this.Interval),
             PacketSize = Int32.Parse(this.PacketSize),
-            Timeout = Double.Parse(this.Timeout)
+            Timeout = Int32.Parse(this.Timeout)
         };
         _pingRunner.Settings = settings;
     }

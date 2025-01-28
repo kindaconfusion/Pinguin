@@ -12,14 +12,14 @@
         xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         services:WindowManager.Register="{Binding}"
         TransparencyLevelHint="Mica"
-        Background="#1E000000"
+        Background="#1a1a1a"
         Icon="/Assets/avalonia-logo.ico"
         Title="Pinguin">
     
 
     
-        <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*">
-            <controls:CommandBar Grid.Row="1" DefaultLabelPosition="Right">
+        <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*"  Background="#1E000000">
+            <controls:CommandBar Grid.Row="1" DefaultLabelPosition="Right" Background="#1E000000"  >
                 <controls:CommandBar.PrimaryCommands>
                     <controls:CommandBarButton IconSource="Add" Click="AddButtonOnClick" Label="Add"/>
                     <controls:CommandBarButton IconSource="Settings" Click="OptionsButtonOnClick" Label="Ping Options"/>
@@ -28,11 +28,6 @@
         <DataGrid Grid.Row="2" CornerRadius="10" ClipToBounds="True" GridLinesVisibility="All" Name="PingGrid" ContextRequested="PingGrid_OnContextRequested"
                   CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" SelectedIndex="{Binding SelectedIndex}"
                   Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
-            <!--<DataGrid.ContextFlyout>
-                <MenuFlyout>
-                    <MenuItem Header="Remove" Command="{Binding DeletePingCommand}"/>
-                </MenuFlyout>
-            </DataGrid.ContextFlyout>-->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Hostname" Binding="{Binding HostName}"/>
                 <DataGridTextColumn Header="IP Address" Binding="{Binding IpAddress}"/>
@@ -44,6 +39,12 @@
             </DataGrid.Columns>
         </DataGrid>
             <GridSplitter Grid.Row="3" Margin="10 5" Opacity=".4"/>
-            <lvc:CartesianChart Name="DaChart" Series="{Binding Series}" Grid.Row="4"/>
+            <ListBox Grid.Row="4" ItemsSource="{Binding Series}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <lvc:CartesianChart/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
     </Grid>
 </windowing:AppWindow>

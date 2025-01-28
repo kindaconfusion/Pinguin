@@ -23,9 +23,9 @@ public partial class MainView : AppWindow
     public MainView()
     {
         InitializeComponent();
-        DaChart.XAxes = new List<Axis>{new Axis {MinStep = 1}};
+        /*DaChart.XAxes = new List<Axis>{new Axis {MinStep = 1}};
         DaChart.YAxes = new List<Axis> {new Axis
-        { MinStep = 1 }};
+        { MinStep = 1 }};*/
     }
 
     private void AddButtonOnClick(object? sender, RoutedEventArgs e)
@@ -56,7 +56,9 @@ public partial class MainView : AppWindow
                     Items =
                     {
                         new MenuItem {Header = "Remove", Command = context.DeletePingCommand},
-                        new MenuItem {Header = "Open Graph", Command = context.OpenGraphCommand, CommandParameter = dataGridRow.DataContext as PingObject }
+                        new MenuItem {Header = "Open Graph", 
+                            Command = context.OpenGraphCommand, 
+                            CommandParameter = dataGridRow.DataContext as PingObject }
                     },
                 };
                 flyout.ShowAt(sender as Control, true);

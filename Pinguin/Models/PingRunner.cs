@@ -86,8 +86,17 @@ public class PingRunner
             await Task.Delay((int) (Settings.Interval * 1000.0));
             using Ping p = new Ping();
             ping.PingsSent++;
-            var reply = await p.SendPingAsync(ping.IpAddress, 2, Encoding.ASCII.GetBytes(GeneratePingContent(Settings.PacketSize.Value)));
-            ping.AddReply(reply);
+            PingReply reply;
+            try
+            {
+                ping.AddReply(await p.SendPingAsync(ping.IpAddress, Settings.Timeout * 1000 ?? 2000,
+                    Encoding.ASCII.GetBytes(GeneratePingContent(Settings.PacketSize.Value))));
+            }
+            catch (PlatformNotSupportedException)
+            {
+                reply = await p.SendPingAsync(ping.IpAddress, (Settings.Timeout * 1000) ?? 2000);
+                ping.AddReply(reply);
+            }
         }
     }
     

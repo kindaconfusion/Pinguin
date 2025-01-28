@@ -21,10 +21,10 @@ public static class Traceroute
             var cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             var sender = new Ping();
-            var reply = await sender.SendPingAsync(host.IpAddress, new TimeSpan(0, 0, 1), Encoding.ASCII.GetBytes("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), options, token);
-            if (reply.Status is IPStatus.Success or IPStatus.TtlExpired)
+            var reply = await sender.SendPingAsync(host.IpAddress, new TimeSpan(0, 0, 0, 0, 500), null, options, token);
+            if (reply.Status is IPStatus.Success or IPStatus.TtlExpired or IPStatus.TimeExceeded)
             {
-                var ping = new PingObject { IpAddress = host.IpAddress };
+                var ping = new PingObject { IpAddress = reply.Address };
                 try
                 {
                     var hostname = Dns.GetHostEntryAsync(reply.Address);

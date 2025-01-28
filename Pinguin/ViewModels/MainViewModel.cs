@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ public partial class MainViewModel : ViewModelBase
 
     [ObservableProperty] private object _dialog;
 
-    [ObservableProperty] private ISeries[] _series = Array.Empty<ISeries>();
+    [ObservableProperty] private ObservableCollection<ISeries[]> _series = new();
 
     private readonly PingRunner _pingRunner;
     
@@ -36,7 +37,8 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     public void OpenGraph(PingObject ping)
     {
-        Series = ping.Series;
+        Series.Add(ping.Series);
+        //Series = ping.Series;
     }
 
     [RelayCommand]
