@@ -9,9 +9,11 @@ namespace Pinguin.ViewModels;
 public partial class AddViewModel : ViewModelBase
 {
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddHostCommand), nameof(AddTraceRouteCommand))] private string? _hostName;
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddHostCommand), nameof(AddTraceRouteCommand), nameof(CloseCommand))] private bool _traceRunning;
     private readonly PingRunner _pingRunner;
     
-    private bool CanAdd() { return !string.IsNullOrWhiteSpace(HostName); }
+    private bool CanAdd() { return !string.IsNullOrWhiteSpace(HostName) && !TraceRunning; }
+    private bool CanClose() => !TraceRunning;
     
     public AddViewModel(PingRunner pingRunner)
     {
@@ -28,17 +30,16 @@ public partial class AddViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanAdd))]
     public async Task AddTraceRoute()
     {
+        TraceRunning = true;
         await _pingRunner.Tracert(HostName);
         HostName = string.Empty;
-        try
-        {
-            //DialogHost.Close("Root");
-        }
-        catch (InvalidOperationException ex)
-        {
-            // the user closed the dialog before the traceroute completed.
-            // this is acceptable
-            // (there may be a cleaner way to do this but i think it's fine this way)
-        }
+        TraceRunning = false;
+        RaiseClose();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanClose))]
+    private void Close()
+    {
+        RaiseClose();
     }
 }

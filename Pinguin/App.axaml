@@ -12,19 +12,22 @@
         <services:ViewLocator/>
     </Application.DataTemplates>
   
-             <Application.Resources><ControlTheme
-                                        x:Key="MyDataGrid"
-                                        BasedOn="{StaticResource {x:Type DataGrid}}"
-                                        TargetType="DataGrid">
-                     <Style Selector="^ /template/ Border#DataGridBorder">
-                         <Setter Property="ClipToBounds" Value="True" />
-                     </Style>
-                 </ControlTheme>
-
+             <Application.Resources>
+                 <ResourceDictionary>
+                     <ResourceDictionary.MergedDictionaries>
+                         <ResourceInclude Source="avares://Pinguin/Styles/BetterContentDialogStyle.axaml"/>
+                     </ResourceDictionary.MergedDictionaries>
+                 </ResourceDictionary>
+                     <ControlTheme
+                         x:Key="MyDataGrid"
+                         BasedOn="{StaticResource {x:Type DataGrid}}"
+                         TargetType="DataGrid">
+                         <Style Selector="^ /template/ Border#DataGridBorder">
+                             <Setter Property="ClipToBounds" Value="True" />
+                         </Style>
+                     </ControlTheme>
                  </Application.Resources>
     <Application.Styles>
         <styling:FluentAvaloniaTheme />
-        <!--<dialogHostAvalonia:DialogHostStyles />-->
-        <!--<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>-->
     </Application.Styles>
 </Application>
