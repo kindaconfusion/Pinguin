@@ -9,7 +9,7 @@
     </ResourceDictionary.MergedDictionaries>
     
     <ControlTheme
-        x:Key="ImKillingMyself"
+        x:Key="BetterContentDialog"
         BasedOn="{StaticResource {x:Type ui:ContentDialog}}"
         TargetType="ui:ContentDialog">
         <Style Selector="^ /template/ Button#CloseButton">

@@ -4,7 +4,7 @@
                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                              xmlns:vm="clr-namespace:Pinguin.ViewModels"
                              xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
-                             Theme="{StaticResource ImKillingMyself}" 
+                             Theme="{StaticResource BetterContentDialog}" 
                              x:Class="Pinguin.Views.AddView"
                              x:DataType="vm:AddViewModel"
                              DefaultButton="Primary"
