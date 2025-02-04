@@ -19,7 +19,7 @@
                      </ResourceDictionary.MergedDictionaries>
                  </ResourceDictionary>
                      <ControlTheme
-                         x:Key="MyDataGrid"
+                         x:Key="RoundDataGrid"
                          BasedOn="{StaticResource {x:Type DataGrid}}"
                          TargetType="DataGrid">
                          <Style Selector="^ /template/ Border#DataGridBorder">
