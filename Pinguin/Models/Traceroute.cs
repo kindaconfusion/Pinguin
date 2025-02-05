@@ -16,7 +16,7 @@ public static class Traceroute
         var traceroute = new List<PingObject>();
         var options = new PingOptions();
         options.Ttl = 1;
-        while (traceroute.Count == 0 || !traceroute.Last().IpAddress.Equals(host.IpAddress))
+        while (options.Ttl < 30 && (traceroute.Count == 0 || !traceroute.Last().IpAddress.Equals(host.IpAddress)))
         {
             var cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;

@@ -25,7 +25,7 @@
                     <controls:CommandBarButton IconSource="Settings" Click="OptionsButtonOnClick" Label="Ping Options"/>
                 </controls:CommandBar.PrimaryCommands>
             </controls:CommandBar>
-        <DataGrid Grid.Row="2" CornerRadius="10" ClipToBounds="True" GridLinesVisibility="All" Name="PingGrid" ContextRequested="PingGrid_OnContextRequested"
+        <DataGrid Theme="{StaticResource RoundDataGrid}" Grid.Row="2" CornerRadius="10" ClipToBounds="True" GridLinesVisibility="All" Name="PingGrid" ContextRequested="PingGrid_OnContextRequested"
                   CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" SelectedIndex="{Binding SelectedIndex}"
                   Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
             <DataGrid.Columns>

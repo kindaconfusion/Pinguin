@@ -1,10 +1,10 @@
-
-        <controls:ContentDialog Title="Add Ping" xmlns="https://github.com/avaloniaui"
+<controls:ContentDialog Title="Add Ping" xmlns="https://github.com/avaloniaui"
                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                              xmlns:vm="clr-namespace:Pinguin.ViewModels"
                              xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+                             Theme="{StaticResource BetterContentDialog}" 
                              x:Class="Pinguin.Views.AddView"
                              x:DataType="vm:AddViewModel"
                              DefaultButton="Primary"
@@ -12,6 +12,7 @@
                              PrimaryButtonCommand="{Binding AddHostCommand}"
             SecondaryButtonText="Traceroute"
                              SecondaryButtonCommand="{Binding AddTraceRouteCommand}"
+                             Closing="ContentDialog_OnClosing"
                              CloseButtonText="Cancel">
-        <TextBox  Watermark="Host" Text="{Binding HostName, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged"/>
+            <TextBox  Watermark="Host" Text="{Binding HostName, Mode=TwoWay}" />
 </controls:ContentDialog>
