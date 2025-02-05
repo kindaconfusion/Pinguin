@@ -12,10 +12,11 @@
         xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         services:WindowManager.Register="{Binding}"
         TransparencyLevelHint="Mica"
-        Background="#1a1a1a"
-        Icon="/Assets/avalonia-logo.ico"
+        Background="Transparent"
+        TransparencyBackgroundFallback="#1a1a1a"
+        Icon="/Assets/icon.ico"
         Title="Pinguin">
-        <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*"  Background="#1E000000">
+    <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*"  Background="#1E000000">
             <controls:CommandBar Grid.Row="1" DefaultLabelPosition="Right" Background="#1E000000"  >
                 <controls:CommandBar.PrimaryCommands>
                     <controls:CommandBarButton IconSource="Add" Click="AddButtonOnClick" Label="Add"/>

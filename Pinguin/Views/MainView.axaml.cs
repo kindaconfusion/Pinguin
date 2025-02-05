@@ -7,6 +7,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.VisualTree;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Windowing;
@@ -23,6 +24,7 @@ public partial class MainView : AppWindow
     public MainView()
     {
         InitializeComponent();
+        TitleBar.ButtonInactiveForegroundColor = Colors.White;
         /*DaChart.XAxes = new List<Axis>{new Axis {MinStep = 1}};
         DaChart.YAxes = new List<Axis> {new Axis
         { MinStep = 1 }};*/

@@ -4,6 +4,7 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using FluentAvalonia.Styling;
 using Microsoft.Extensions.DependencyInjection;
 using Pinguin.Services;
 using Pinguin.ViewModels;
@@ -29,6 +30,8 @@ public partial class App : Application
             // Creates a ServiceProvider containing services from the provided IServiceCollection
             var services = collection.BuildServiceProvider();
             ServiceLocator.Instance = services; // bad practice? suck my DICK AND BALLS
+            var faTheme = Application.Current?.Styles.OfType<FluentAvaloniaTheme>().FirstOrDefault();
+            faTheme.PreferUserAccentColor = true;
             WindowHelper.Initialize(services);
             DisableAvaloniaDataAnnotationValidation();
             var vm = services.GetRequiredService<MainViewModel>();
