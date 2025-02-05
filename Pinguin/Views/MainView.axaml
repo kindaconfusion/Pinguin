@@ -41,7 +41,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel IsVisible="{Binding GraphVisible}">
-                            <TextBlock HorizontalAlignment="Center" Text="{Binding HostName}"/>
+                            <TextBlock  FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding HostName}"/>
                             <lvc:CartesianChart Title="{Binding HostName}"
                                                 Series="{Binding Series}"
                                                 Height="200"/>
