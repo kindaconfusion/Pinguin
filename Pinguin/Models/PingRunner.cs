@@ -47,9 +47,14 @@ public class PingRunner
 
     public async Task AddPing(string host)
     {
-        var ip = await ResolveIp(host);
-        var ping = new PingObject {HostName = host};
-        ping.IpAddress = ip;
+        IPAddress? ip = null;
+        IPAddress.TryParse(host, out ip);
+        var ping = new PingObject
+        {
+            HostName = (ip is not null) ? await ResolveHostName(ip) : host,
+            IpAddress = ip ?? await ResolveIp(host)
+        };
+        
         Pings.Add(ping);
         var cts = new CancellationTokenSource();
         _tasks.Add(ping, cts);
@@ -100,7 +105,7 @@ public class PingRunner
         }
     }
     
-    public async Task<IPAddress?> ResolveIp(string host)
+    public static async Task<IPAddress?> ResolveIp(string host)
     {
         host.Trim().TrimEnd('\r', '\n');
         try 
@@ -138,5 +143,22 @@ public class PingRunner
             return string.Concat(Enumerable.Repeat(alphabet, (length + alphabet.Length - 1) / alphabet.Length))
                 .Substring(0, length);
         }
+    }
+
+    public static async Task<string> ResolveHostName(IPAddress address)
+    {
+        string hostEntry;
+        var hostname = Dns.GetHostEntryAsync(address);
+        var timeoutTask = Task.Delay(1000);
+                    
+        if (await Task.WhenAny(hostname, timeoutTask) == hostname)
+        {
+            hostEntry = hostname.Result.HostName;
+        }
+        else
+        {
+            hostEntry = address.ToString();
+        }
+        return hostEntry;
     }
 }

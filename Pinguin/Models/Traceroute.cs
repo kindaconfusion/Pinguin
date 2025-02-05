@@ -27,17 +27,7 @@ public static class Traceroute
                 var ping = new PingObject { IpAddress = reply.Address };
                 try
                 {
-                    var hostname = Dns.GetHostEntryAsync(reply.Address);
-                    var timeoutTask = Task.Delay(1000);
-                    
-                    if (await Task.WhenAny(hostname, timeoutTask) == hostname)
-                    {
-                        ping.HostName = hostname.Result.HostName;
-                    }
-                    else
-                    {
-                        ping.HostName = reply.Address.ToString();
-                    }
+                    ping.HostName = await PingRunner.ResolveHostName(host.IpAddress);
                 }
                 catch (Exception ex)
                 {
