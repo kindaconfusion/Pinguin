@@ -15,9 +15,6 @@
         Background="#1a1a1a"
         Icon="/Assets/avalonia-logo.ico"
         Title="Pinguin">
-    
-
-    
         <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*"  Background="#1E000000">
             <controls:CommandBar Grid.Row="1" DefaultLabelPosition="Right" Background="#1E000000"  >
                 <controls:CommandBar.PrimaryCommands>
@@ -44,13 +41,10 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel IsVisible="{Binding GraphVisible}">
-                            
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding HostName}"/>
                             <lvc:CartesianChart Title="{Binding HostName}"
-                                                ZoomMode="X"
                                                 Series="{Binding Series}"
-                                                Height="200">
-                                
-                            </lvc:CartesianChart>
+                                                Height="200"/>
                             </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
