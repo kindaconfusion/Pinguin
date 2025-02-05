@@ -20,6 +20,7 @@ public partial class PingObject : ObservableObject
     [ObservableProperty] private double? _pingPercent;
     [ObservableProperty] private double? _averagePing;
     [ObservableProperty] private ISeries[] _series;
+    [ObservableProperty] private bool _graphVisible;
     public ObservableCollection<long?> LineSeries;
     public ObservableCollection<long?> BarSeries;
 
@@ -28,6 +29,7 @@ public partial class PingObject : ObservableObject
         PingsSent = 0;
         PingsReceived = 0;
         PingsLost = 0;
+        GraphVisible = false;
         Series = new ISeries[]
         {
             new LineSeries<long?>
@@ -79,7 +81,7 @@ public partial class PingObject : ObservableObject
         {
             PingsLost++;
             LineSeries.Add(null);
-            BarSeries.Add(LineSeries.Max());
+            BarSeries.Add(LineSeries.Max() ?? 1);
         }
         PingPercent = (double) PingsLost / PingsSent;
     }

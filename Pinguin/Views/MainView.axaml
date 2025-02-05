@@ -39,12 +39,22 @@
             </DataGrid.Columns>
         </DataGrid>
             <GridSplitter Grid.Row="3" Margin="10 5" Opacity=".4"/>
-            <ListBox Grid.Row="4" ItemsSource="{Binding Series}">
-                <ListBox.ItemTemplate>
+            <ScrollViewer Grid.Row="4">
+            <ItemsControl ItemsSource="{Binding Pings}">
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <lvc:CartesianChart/>
+                        <StackPanel IsVisible="{Binding GraphVisible}">
+                            
+                            <lvc:CartesianChart Title="{Binding HostName}"
+                                                ZoomMode="X"
+                                                Series="{Binding Series}"
+                                                Height="200">
+                                
+                            </lvc:CartesianChart>
+                            </StackPanel>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+                </ScrollViewer>
     </Grid>
 </windowing:AppWindow>

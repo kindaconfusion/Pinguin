@@ -38,6 +38,7 @@ public partial class MainViewModel : ViewModelBase
     public void OpenGraph(PingObject ping)
     {
         Series.Add(ping.Series);
+        ping.GraphVisible = true;
         //Series = ping.Series;
     }
 
