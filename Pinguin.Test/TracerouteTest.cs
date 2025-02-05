@@ -16,18 +16,13 @@ public class Tests
         {
             IpAddress = IPAddress.Parse("8.8.8.8"),
         };
-        try
-        {
+
             await foreach (var p in Traceroute.RunTraceroute(ping))
             {
                 Console.WriteLine(p.IpAddress.ToString());
                 if (p.IpAddress.Equals(IPAddress.Parse("8.8.8.8"))) Assert.Pass();
             }
-        }
-        catch (Exception)
-        {
             Assert.Fail();
-        }
         
     }
 }
