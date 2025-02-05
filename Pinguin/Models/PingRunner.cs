@@ -16,7 +16,7 @@ public class PingRunner
     public Options Settings { get; set; } = new ();
     public ObservableCollection<PingObject> Pings { get; set; } = new();
     
-    private Dictionary<PingObject, CancellationTokenSource> _tasks = new();
+    public Dictionary<PingObject, CancellationTokenSource> Tasks = new();
     public PingRunner(IEnumerable<PingObject>? pings)
     {
         //if (pings != null)
@@ -57,7 +57,7 @@ public class PingRunner
         
         Pings.Add(ping);
         var cts = new CancellationTokenSource();
-        _tasks.Add(ping, cts);
+        Tasks.Add(ping, cts);
         Task.Run(() => RunPing(ping, cts.Token));
     }
     
@@ -65,16 +65,16 @@ public class PingRunner
     {
         Pings.Add(ping);
         var cts = new CancellationTokenSource();
-        _tasks.Add(ping, cts);
+        Tasks.Add(ping, cts);
         Task.Run(() => RunPing(ping, cts.Token));
     }
 
     public async void RemovePing(PingObject ping)
     {
         CancellationTokenSource token;
-        if (!_tasks.TryGetValue(ping, out token)) return;
+        if (!Tasks.TryGetValue(ping, out token)) return;
         token.Cancel();
-        _tasks.Remove(ping);
+        Tasks.Remove(ping);
         Pings.Remove(ping);
     }
 
@@ -108,25 +108,16 @@ public class PingRunner
     public static async Task<IPAddress?> ResolveIp(string host)
     {
         host.Trim().TrimEnd('\r', '\n');
-        try 
+        if (!IPAddress.TryParse(host, out IPAddress? address))
         {
-            if (!IPAddress.TryParse(host, out IPAddress address))
+            var entry = await Dns.GetHostEntryAsync(host);
+            if (entry.AddressList.Length == 0)
             {
-                var entry = await Dns.GetHostEntryAsync(host);
-
-                if (entry.AddressList.Length == 0)
-                {
                     return null;
-                }
-                return entry.AddressList[0];
             }
-            return address;
+            return entry.AddressList[0];
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error occurred while resolving IP - {ex.GetType().Name}: {ex.Message}");
-            throw;
-        }
+        return address;
     }
     
     private string GeneratePingContent(int length)

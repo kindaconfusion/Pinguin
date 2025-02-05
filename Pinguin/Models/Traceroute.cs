@@ -16,7 +16,7 @@ public static class Traceroute
         var traceroute = new List<PingObject>();
         var options = new PingOptions();
         options.Ttl = 1;
-        while (options.Ttl < 30 && (traceroute.Count == 0 || !traceroute.Last().IpAddress.Equals(host.IpAddress)))
+        while (options.Ttl < 31 && (traceroute.Count == 0 || !traceroute.Last().IpAddress.Equals(host.IpAddress)))
         {
             var cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
@@ -27,7 +27,7 @@ public static class Traceroute
                 var ping = new PingObject { IpAddress = reply.Address };
                 try
                 {
-                    ping.HostName = await PingRunner.ResolveHostName(host.IpAddress);
+                    ping.HostName = await PingRunner.ResolveHostName(reply.Address);
                 }
                 catch (Exception ex)
                 {
@@ -39,6 +39,10 @@ public static class Traceroute
                 if (reply.Status == IPStatus.Success) break;
             }
             options.Ttl++;
+        }
+        if (options.Ttl == 30)
+        {
+            throw new TimeoutException("Unable to reach host after 30 hops.");
         }
     }
 }

@@ -8,20 +8,26 @@ namespace Pinguin.Test;
 [TestFixture]
 public class Tests
 {
-
-    [Test]
-    public void Test()
-    {
-        Console.WriteLine("huh");
-        Assert.Pass();
-    }
     
-    /*[Test]
-    public async Task Test1()
+    [Test]
+    public async Task TraceRouteTest()
     {
-        var SHIT = new PingObject(IPAddress.Parse("8.8.8.8"));
-        var trace = await Traceroute.RunTraceroute(SHIT);
-        TestContext.Out.WriteLine(String.Join(", ", trace.Select(x => x.IpAddress)));
-        Assert.Pass();
-    }*/
+        var ping = new PingObject()
+        {
+            IpAddress = IPAddress.Parse("8.8.8.8"),
+        };
+        try
+        {
+            await foreach (var p in Traceroute.RunTraceroute(ping))
+            {
+                Console.WriteLine(p.IpAddress.ToString());
+                if (p.IpAddress.Equals(IPAddress.Parse("8.8.8.8"))) Assert.Pass();
+            }
+        }
+        catch (Exception)
+        {
+            Assert.Fail();
+        }
+        
+    }
 }
