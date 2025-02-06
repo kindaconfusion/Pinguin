@@ -18,6 +18,7 @@ public class PingTest
     public async Task ResolveHostName_ValidIP_Resolves()
     {
         var hostname = await PingRunner.ResolveHostName(IPAddress.Parse("1.1.1.1"));
+        Console.WriteLine(hostname);
         if (hostname.Equals("one.one.one.one")) Assert.Pass(); else Assert.Fail();
     }
     
