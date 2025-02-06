@@ -32,7 +32,6 @@ public partial class App : Application
             ServiceLocator.Instance = services; // bad practice? suck my DICK AND BALLS
             var faTheme = Application.Current?.Styles.OfType<FluentAvaloniaTheme>().FirstOrDefault();
             faTheme.PreferUserAccentColor = true;
-            WindowHelper.Initialize(services);
             DisableAvaloniaDataAnnotationValidation();
             var vm = services.GetRequiredService<MainViewModel>();
             desktop.MainWindow = new MainView

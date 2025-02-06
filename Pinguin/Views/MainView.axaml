@@ -10,7 +10,6 @@
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
         xmlns:windowing="clr-namespace:FluentAvalonia.UI.Windowing;assembly=FluentAvalonia"
         xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
-        services:WindowManager.Register="{Binding}"
         TransparencyLevelHint="Mica"
         Background="{OnPlatform Windows={StaticResource Transparent}, Default='{StaticResource BackgroundBrush}'}"
         TransparencyBackgroundFallback="#1a1a1a"
