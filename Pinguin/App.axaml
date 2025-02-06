@@ -1,46 +1,45 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Pinguin.App"
-             xmlns:local="using:Pinguin"
-             
+
              xmlns:services="clr-namespace:Pinguin.Services"
              xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <services:ViewLocator/>
+        <services:ViewLocator />
     </Application.DataTemplates>
-  
-             <Application.Resources>
-                 <ResourceDictionary>
-                     <ResourceDictionary.MergedDictionaries>
-                         <ResourceInclude Source="avares://Pinguin/Styles/BetterContentDialogStyle.axaml"/>
-                     </ResourceDictionary.MergedDictionaries>
-                     <ResourceDictionary.ThemeDictionaries>
-                         <ResourceDictionary x:Key='Light'>
-                             <SolidColorBrush x:Key='Transparent'>Transparent</SolidColorBrush>
-                             <SolidColorBrush x:Key='ObjectBackgroundBrush'>#f0f0f0</SolidColorBrush>
-                             <SolidColorBrush x:Key='BackgroundBrush'>WhiteSmoke</SolidColorBrush>
-                             <SolidColorBrush x:Key='ForegroundBrush'>#0f0f0f</SolidColorBrush>
-                         </ResourceDictionary>
-                         <ResourceDictionary x:Key='Dark'>
-                             <SolidColorBrush x:Key='Transparent'>Transparent</SolidColorBrush>
-                             <SolidColorBrush x:Key='ObjectBackgroundBrush'>#1a1a1a</SolidColorBrush>
-                             <SolidColorBrush x:Key='BackgroundBrush'>#0f0f0f</SolidColorBrush>
-                             <SolidColorBrush x:Key='ForegroundBrush'>White</SolidColorBrush>
-                         </ResourceDictionary>
-                     </ResourceDictionary.ThemeDictionaries>
-                 </ResourceDictionary>
-                     <ControlTheme
-                         x:Key="RoundDataGrid"
-                         BasedOn="{StaticResource {x:Type DataGrid}}"
-                         TargetType="DataGrid">
-                         <Style Selector="^ /template/ Border#DataGridBorder">
-                             <Setter Property="ClipToBounds" Value="True" />
-                         </Style>
-                     </ControlTheme>
-                 </Application.Resources>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Pinguin/Styles/BetterContentDialogStyle.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key='Light'>
+                    <SolidColorBrush x:Key='Transparent'>Transparent</SolidColorBrush>
+                    <SolidColorBrush x:Key='ObjectBackgroundBrush'>#f0f0f0</SolidColorBrush>
+                    <SolidColorBrush x:Key='BackgroundBrush'>WhiteSmoke</SolidColorBrush>
+                    <SolidColorBrush x:Key='ForegroundBrush'>#0f0f0f</SolidColorBrush>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key='Dark'>
+                    <SolidColorBrush x:Key='Transparent'>Transparent</SolidColorBrush>
+                    <SolidColorBrush x:Key='ObjectBackgroundBrush'>#1a1a1a</SolidColorBrush>
+                    <SolidColorBrush x:Key='BackgroundBrush'>#0f0f0f</SolidColorBrush>
+                    <SolidColorBrush x:Key='ForegroundBrush'>White</SolidColorBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+        <ControlTheme
+            x:Key="RoundDataGrid"
+            BasedOn="{StaticResource {x:Type DataGrid}}"
+            TargetType="DataGrid">
+            <Style Selector="^ /template/ Border#DataGridBorder">
+                <Setter Property="ClipToBounds" Value="True" />
+            </Style>
+        </ControlTheme>
+    </Application.Resources>
     <Application.Styles>
         <styling:FluentAvaloniaTheme />
     </Application.Styles>

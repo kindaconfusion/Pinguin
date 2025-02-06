@@ -1,42 +1,40 @@
 ﻿<controls:ContentDialog xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:Pinguin.ViewModels"
-        x:Class="Pinguin.Views.PingOptionsView"
-        x:DataType="vm:PingOptionsViewModel"
-        xmlns:behaviors="clr-namespace:Pinguin.Behaviors"
-        xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
-        Title="Ping Options"
-        PrimaryButtonText="Save"
-        PrimaryButtonCommand="{Binding SaveCommand}"
-        CloseButtonText="Cancel">
-        <StackPanel Margin="10" Spacing="5">
-                <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5 10" Text="Ping interval:"/>
-                        <TextBox Text="{Binding Interval, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
-                                <Interaction.Behaviors>
-                                        <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
-                                </Interaction.Behaviors>
-                        </TextBox>
-                        <TextBlock Margin="5 10 20 10 " Text="seconds"/>
-                        <TextBlock Margin="5 10" Text="Packet size:"/>
-                        <TextBox Text="{Binding PacketSize, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
-                                <Interaction.Behaviors>
-                                        <behaviors:NumericInputBehavior AllowDecimal="False" AllowNegative="False" />
-                                </Interaction.Behaviors>
-                        </TextBox>
-                        <TextBlock Margin="5 10 20 10 " Text="bytes"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5 10" Text="Ping timeout:"/>
-                        <TextBox Text="{Binding Timeout, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
-                                <Interaction.Behaviors>
-                                        <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
-                                </Interaction.Behaviors>
-                        </TextBox>
-                        <TextBlock Margin="5 10 20 10 " Text="seconds"/>
-                </StackPanel>
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:vm="clr-namespace:Pinguin.ViewModels"
+                        x:Class="Pinguin.Views.PingOptionsView"
+                        x:DataType="vm:PingOptionsViewModel"
+                        xmlns:behaviors="clr-namespace:Pinguin.Behaviors"
+                        xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+                        Title="Ping Options"
+                        PrimaryButtonText="Save"
+                        PrimaryButtonCommand="{Binding SaveCommand}"
+                        CloseButtonText="Cancel">
+    <StackPanel Margin="10" Spacing="5">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Margin="5 10" Text="Ping interval:" />
+            <TextBox Text="{Binding Interval, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
+                <Interaction.Behaviors>
+                    <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
+                </Interaction.Behaviors>
+            </TextBox>
+            <TextBlock Margin="5 10 20 10 " Text="seconds" />
+            <TextBlock Margin="5 10" Text="Packet size:" />
+            <TextBox Text="{Binding PacketSize, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
+                <Interaction.Behaviors>
+                    <behaviors:NumericInputBehavior AllowDecimal="False" AllowNegative="False" />
+                </Interaction.Behaviors>
+            </TextBox>
+            <TextBlock Margin="5 10 20 10 " Text="bytes" />
         </StackPanel>
-        
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Margin="5 10" Text="Ping timeout:" />
+            <TextBox Text="{Binding Timeout, Mode=TwoWay}" TextChanged="TextBox_OnTextChanged">
+                <Interaction.Behaviors>
+                    <behaviors:NumericInputBehavior AllowDecimal="True" AllowNegative="False" />
+                </Interaction.Behaviors>
+            </TextBox>
+            <TextBlock Margin="5 10 20 10 " Text="seconds" />
+        </StackPanel>
+    </StackPanel>
+
 </controls:ContentDialog>

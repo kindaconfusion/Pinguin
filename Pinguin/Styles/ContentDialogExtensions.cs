@@ -9,7 +9,7 @@ public static class ContentDialogExtensions
         AvaloniaProperty.RegisterAttached<ContentDialog, bool>(
             "IsCloseButtonEnabled",
             typeof(ContentDialogExtensions),
-            defaultValue: true);
+            true);
 
     public static void SetIsCloseButtonEnabled(ContentDialog element, bool value)
     {

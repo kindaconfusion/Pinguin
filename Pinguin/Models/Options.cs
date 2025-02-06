@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Pinguin.Models;
 
@@ -16,6 +14,7 @@ public partial class Options : ObservableObject
         _packetSize = 32;
         _timeout = 4;
     }
+
     public Options(double interval, int packetSize)
     {
         _interval = interval;

@@ -1,10 +1,7 @@
-
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -14,16 +11,13 @@ using Avalonia.Styling;
 using Avalonia.VisualTree;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Windowing;
-using LiveChartsCore.SkiaSharpView;
 using Pinguin.Models;
 using Pinguin.ViewModels;
-
 
 namespace Pinguin.Views;
 
 public partial class MainView : AppWindow
 {
-
     public MainView()
     {
         InitializeComponent();
@@ -38,11 +32,13 @@ public partial class MainView : AppWindow
         var dialog = new AddView();
         dialog.ShowAsync();
     }
+
     private void OptionsButtonOnClick(object? sender, RoutedEventArgs e)
     {
         var dialog = new PingOptionsView();
         dialog.ShowAsync();
     }
+
     private void PingGrid_OnContextRequested(object? sender, ContextRequestedEventArgs e)
     {
         Point position;
@@ -61,14 +57,18 @@ public partial class MainView : AppWindow
                     Items =
                     {
                         new MenuItem {Header = "Remove", Command = context.DeletePingCommand},
-                        new MenuItem {Header = "Open Graph", 
-                            Command = context.OpenGraphCommand, 
-                            CommandParameter = dataGridRow.DataContext as PingObject }
-                    },
+                        new MenuItem
+                        {
+                            Header = "Open Graph",
+                            Command = context.OpenGraphCommand,
+                            CommandParameter = dataGridRow.DataContext as PingObject
+                        }
+                    }
                 };
                 flyout.ShowAt(sender as Control, true);
             }
         }
+
         e.Handled = true;
     }
 
@@ -86,7 +86,7 @@ public partial class MainView : AppWindow
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 url = url.Replace("&", "^&");
-                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(url) {UseShellExecute = true});
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {

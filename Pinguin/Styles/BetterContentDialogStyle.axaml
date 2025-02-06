@@ -1,19 +1,19 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ui="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
-                    xmlns:local="using:Pinguin"
                     xmlns:styles="clr-namespace:Pinguin.Styles">
-    
+
     <ResourceDictionary.MergedDictionaries>
-        <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/FAControls/ContentDialogStyles.axaml"/>
+        <ResourceInclude Source="avares://FluentAvalonia/Styling/ControlThemes/FAControls/ContentDialogStyles.axaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <ControlTheme
         x:Key="BetterContentDialog"
         BasedOn="{StaticResource {x:Type ui:ContentDialog}}"
         TargetType="ui:ContentDialog">
         <Style Selector="^ /template/ Button#CloseButton">
-            <Setter Property="IsEnabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(styles:ContentDialogExtensions.IsCloseButtonEnabled)}"/>
+            <Setter Property="IsEnabled"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(styles:ContentDialogExtensions.IsCloseButtonEnabled)}" />
         </Style>
-        </ControlTheme>
+    </ControlTheme>
 </ResourceDictionary>

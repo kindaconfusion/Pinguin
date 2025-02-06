@@ -1,6 +1,6 @@
 using Pinguin.Models;
 
-namespace Pinguin.Test;
+namespace Pinguin.Test.Models;
 
 [TestFixture]
 public class UpdateTest
@@ -10,8 +10,8 @@ public class UpdateTest
     {
         var update = await UpdateChecker.CheckForUpdates("0.0.1");
         if (!update) Assert.Fail();
-        
     }
+
     [Test]
     public async Task CheckForUpdates_NewerVersionNotExists_True()
     {

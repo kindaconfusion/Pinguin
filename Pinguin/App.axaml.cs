@@ -1,8 +1,7 @@
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
 using FluentAvalonia.Styling;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +11,7 @@ using Pinguin.Views;
 
 namespace Pinguin;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
@@ -25,12 +24,12 @@ public partial class App : Application
         {
             var collection = new ServiceCollection();
             collection.AddCommonServices();
-            
+
 
             // Creates a ServiceProvider containing services from the provided IServiceCollection
             var services = collection.BuildServiceProvider();
             ServiceLocator.Instance = services; // bad practice? suck my DICK AND BALLS
-            var faTheme = Application.Current?.Styles.OfType<FluentAvaloniaTheme>().FirstOrDefault();
+            var faTheme = Current?.Styles.OfType<FluentAvaloniaTheme>().FirstOrDefault();
             faTheme.PreferUserAccentColor = true;
             DisableAvaloniaDataAnnotationValidation();
             var vm = services.GetRequiredService<MainViewModel>();
@@ -50,9 +49,6 @@ public partial class App : Application
             BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
 
         // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
-        {
-            BindingPlugins.DataValidators.Remove(plugin);
-        }
+        foreach (var plugin in dataValidationPluginsToRemove) BindingPlugins.DataValidators.Remove(plugin);
     }
 }

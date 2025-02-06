@@ -7,25 +7,21 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Threading;
 
 namespace Pinguin.Models;
 
 public class PingRunner : IPingRunner
 {
-    public Options Settings { get; set; } = new ();
+    public Options Settings { get; set; } = new();
     public ObservableCollection<PingObject> Pings { get; set; } = new();
-    
-    public Dictionary<PingObject, CancellationTokenSource> Tasks { get; set;  }= new();
+
+    public Dictionary<PingObject, CancellationTokenSource> Tasks { get; set; } = new();
 
     public async Task Tracert(string host)
     {
         var ping = new PingObject {HostName = host};
         ping.IpAddress = await ResolveIp(host);
-        await foreach (var p in Traceroute.RunTraceroute(ping))
-        {
-            AddPing(p);
-        }
+        await foreach (var p in Traceroute.RunTraceroute(ping)) AddPing(p);
     }
 
     public async Task AddPing(string host)
@@ -34,17 +30,17 @@ public class PingRunner : IPingRunner
         IPAddress.TryParse(host, out ip);
         var ping = new PingObject
         {
-            HostName = (ip is not null) ? await ResolveHostName(ip) : host,
+            HostName = ip is not null ? await ResolveHostName(ip) : host,
             IpAddress = ip ?? await ResolveIp(host)
         };
-        
+
         Pings.Add(ping);
         var cts = new CancellationTokenSource();
         Tasks.Add(ping, cts);
         Task.Run(() => RunPing(ping, cts.Token));
     }
-    
-    public async Task AddPing(PingObject ping)
+
+    public void AddPing(PingObject ping)
     {
         Pings.Add(ping);
         var cts = new CancellationTokenSource();
@@ -52,7 +48,7 @@ public class PingRunner : IPingRunner
         Task.Run(() => RunPing(ping, cts.Token));
     }
 
-    public async Task RemovePing(PingObject ping)
+    public void RemovePing(PingObject ping)
     {
         CancellationTokenSource token;
         if (!Tasks.TryGetValue(ping, out token)) return;
@@ -70,9 +66,10 @@ public class PingRunner : IPingRunner
                 Console.WriteLine("Stopping ping.");
                 cancel.ThrowIfCancellationRequested();
             }
+
             //var ping = Pings.FirstOrDefault(p => p.IpAddress.Equals(inPing.IpAddress));
             await Task.Delay((int) (Settings.Interval * 1000.0));
-            using Ping p = new Ping();
+            using var p = new Ping();
             ping.PingsSent++;
             PingReply reply;
             try
@@ -82,41 +79,35 @@ public class PingRunner : IPingRunner
             }
             catch (PlatformNotSupportedException)
             {
-                reply = await p.SendPingAsync(ping.IpAddress, (Settings.Timeout * 1000) ?? 2000);
+                reply = await p.SendPingAsync(ping.IpAddress, Settings.Timeout * 1000 ?? 2000);
                 ping.AddReply(reply);
             }
         }
     }
-    
+
     public static async Task<IPAddress?> ResolveIp(string host)
     {
         host.Trim().TrimEnd('\r', '\n');
-        if (!IPAddress.TryParse(host, out IPAddress? address))
+        if (!IPAddress.TryParse(host, out var address))
         {
             var entry = await Dns.GetHostEntryAsync(host);
-            if (entry.AddressList.Length == 0)
-            {
-                    return null;
-            }
+            if (entry.AddressList.Length == 0) return null;
             return entry.AddressList[0];
         }
+
         return address;
     }
-    
+
     private string GeneratePingContent(int length)
     {
         const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         if (length <= alphabet.Length)
-        {
             // If length is less than or equal to 26, truncate the alphabet
             return alphabet.Substring(0, length);
-        }
-        else
-        {
-            // If length is greater than 26, repeat and truncate
-            return string.Concat(Enumerable.Repeat(alphabet, (length + alphabet.Length - 1) / alphabet.Length))
-                .Substring(0, length);
-        }
+
+        // If length is greater than 26, repeat and truncate
+        return string.Concat(Enumerable.Repeat(alphabet, (length + alphabet.Length - 1) / alphabet.Length))
+            .Substring(0, length);
     }
 
     public static async Task<string> ResolveHostName(IPAddress address)
@@ -124,15 +115,11 @@ public class PingRunner : IPingRunner
         string hostEntry;
         var hostname = Dns.GetHostEntryAsync(address);
         var timeoutTask = Task.Delay(1000);
-                    
+
         if (await Task.WhenAny(hostname, timeoutTask) == hostname)
-        {
             hostEntry = hostname.Result.HostName;
-        }
         else
-        {
             hostEntry = address.ToString();
-        }
         return hostEntry;
     }
 }

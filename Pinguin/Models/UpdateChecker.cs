@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -10,19 +9,19 @@ namespace Pinguin.Models;
 
 public static class UpdateChecker
 {
-    private static HttpClient _client = new()
+    private static readonly HttpClient _client = new()
     {
         BaseAddress = new Uri("https://api.github.com"),
-        DefaultRequestHeaders = { {"User-Agent", "Pinguin"} }
+        DefaultRequestHeaders = {{"User-Agent", "Pinguin"}}
     };
 
-    public static async Task<bool> CheckForUpdates(String version)
+    public static async Task<bool> CheckForUpdates(string version)
     {
-        using HttpResponseMessage response = await _client.GetAsync("/repos/kindaconfusion/Pinguin/releases");
+        using var response = await _client.GetAsync("/repos/kindaconfusion/Pinguin/releases");
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
         var releases = JsonConvert.DeserializeObject<List<Release>>(jsonResponse);
-        
+
         var thisRelease = releases.FirstOrDefault(r => r.tag_name == version);
         if (thisRelease == null) return false;
         var newestRelease = releases.OrderByDescending(r => r.tag_name).First();

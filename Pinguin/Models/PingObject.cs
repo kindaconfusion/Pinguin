@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
@@ -12,17 +11,17 @@ namespace Pinguin.Models;
 
 public partial class PingObject : ObservableObject
 {
+    [ObservableProperty] private double? _averagePing;
+    [ObservableProperty] private bool _graphVisible;
     [ObservableProperty] private string? _hostName;
     [ObservableProperty] private IPAddress? _ipAddress;
-    [ObservableProperty] private int? _pingsSent;
-    [ObservableProperty] private int? _pingsReceived;
-    [ObservableProperty] private int? _pingsLost;
     [ObservableProperty] private double? _pingPercent;
-    [ObservableProperty] private double? _averagePing;
+    [ObservableProperty] private int? _pingsLost;
+    [ObservableProperty] private int? _pingsReceived;
+    [ObservableProperty] private int? _pingsSent;
     [ObservableProperty] private ISeries[] _series;
-    [ObservableProperty] private bool _graphVisible;
-    public ObservableCollection<long?> LineSeries;
     public ObservableCollection<long?> BarSeries;
+    public ObservableCollection<long?> LineSeries;
 
     public PingObject()
     {
@@ -34,11 +33,11 @@ public partial class PingObject : ObservableObject
         {
             new LineSeries<long?>
             {
-                Values = LineSeries = new ObservableCollection<long?>(),
+                Values = LineSeries = new ObservableCollection<long?>()
             },
             new ColumnSeries<long?>
             {
-                Values = BarSeries = new ObservableCollection<long?>(),
+                Values = BarSeries = new ObservableCollection<long?>()
             }
         };
     }
@@ -47,7 +46,8 @@ public partial class PingObject : ObservableObject
     {
         var item = obj as PingObject;
         if (item == null) return false;
-        return (IpAddress is not null && IpAddress.Equals(item.IpAddress)) || (HostName is not null && HostName.Equals(item.HostName));
+        return (IpAddress is not null && IpAddress.Equals(item.IpAddress)) ||
+               (HostName is not null && HostName.Equals(item.HostName));
     }
 
     public override int GetHashCode()
@@ -63,19 +63,15 @@ public partial class PingObject : ObservableObject
             if (AveragePing is null)
                 AveragePing = reply.RoundtripTime;
             else
-                AveragePing = (AveragePing * PingsReceived + reply.RoundtripTime) / (PingsReceived+1);
+                AveragePing = (AveragePing * PingsReceived + reply.RoundtripTime) / (PingsReceived + 1);
             PingsReceived++;
             BarSeries.Add(null);
             if (LineSeries.Count > 0 && reply.RoundtripTime > LineSeries.Max())
-            {
-                for (int i = 0; i < BarSeries.Count; i++)
-                {
+                for (var i = 0; i < BarSeries.Count; i++)
                     if (BarSeries[i] is not null)
                         BarSeries[i] = reply.RoundtripTime;
-                }
-            }
+
             LineSeries.Add(reply.RoundtripTime);
-            
         }
         else
         {
@@ -83,6 +79,7 @@ public partial class PingObject : ObservableObject
             LineSeries.Add(null);
             BarSeries.Add(LineSeries.Max() ?? 1);
         }
+
         PingPercent = (double) PingsLost / PingsSent;
     }
 }
