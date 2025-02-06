@@ -25,6 +25,7 @@ public static class UpdateChecker
         var version = Assembly.GetEntryAssembly()?.GetName().Version.ToString();
         version = version.Substring(0, version.Length - 2);
         var thisRelease = releases.FirstOrDefault(r => r.tag_name == version);
+        if (thisRelease == null) return false;
         var newestRelease = releases.OrderByDescending(r => r.tag_name).First();
         return thisRelease.tag_name != newestRelease.tag_name;
     }
