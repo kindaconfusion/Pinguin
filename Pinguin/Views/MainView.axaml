@@ -21,7 +21,7 @@
     -->
     <windowing:AppWindow.Styles>
         <Style Selector="DataGrid">
-            <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource ObjectBackgroundBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
         </Style>    
     </windowing:AppWindow.Styles>

@@ -20,12 +20,14 @@
                      <ResourceDictionary.ThemeDictionaries>
                          <ResourceDictionary x:Key='Light'>
                              <SolidColorBrush x:Key='Transparent'>Transparent</SolidColorBrush>
+                             <SolidColorBrush x:Key='ObjectBackgroundBrush'>#f0f0f0</SolidColorBrush>
                              <SolidColorBrush x:Key='BackgroundBrush'>WhiteSmoke</SolidColorBrush>
                              <SolidColorBrush x:Key='ForegroundBrush'>#0f0f0f</SolidColorBrush>
                          </ResourceDictionary>
                          <ResourceDictionary x:Key='Dark'>
                              <SolidColorBrush x:Key='Transparent'>Transparent</SolidColorBrush>
-                             <SolidColorBrush x:Key='BackgroundBrush'>#1a1a1a</SolidColorBrush>
+                             <SolidColorBrush x:Key='ObjectBackgroundBrush'>#1a1a1a</SolidColorBrush>
+                             <SolidColorBrush x:Key='BackgroundBrush'>#0f0f0f</SolidColorBrush>
                              <SolidColorBrush x:Key='ForegroundBrush'>White</SolidColorBrush>
                          </ResourceDictionary>
                      </ResourceDictionary.ThemeDictionaries>
