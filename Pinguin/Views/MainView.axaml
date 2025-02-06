@@ -57,5 +57,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
                 </ScrollViewer>
+            <controls:TeachingTip x:Name="Tip" Title="Update Available" Content="A new update for Pinguin is available!" IsOpen="{Binding IsUpdateAvailable}"
+                                  ActionButtonClick="TeachingTip_OnActionButtonClick" ActionButtonContent="Download"/>
     </Grid>
 </windowing:AppWindow>

@@ -24,6 +24,8 @@ public partial class MainViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<ISeries[]> _series = new();
 
+    [ObservableProperty] private bool _isUpdateAvailable;
+
     private readonly PingRunner _pingRunner;
     
     public ObservableCollection<PingObject> Pings => _pingRunner.Pings;
@@ -32,8 +34,15 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(PingRunner pingRunner)
     {
         _pingRunner = pingRunner;
+        IsUpdateAvailable = false;
+        CheckForUpdates();
     }
 
+    private async void CheckForUpdates()
+    {
+        IsUpdateAvailable = await UpdateChecker.CheckForUpdates();
+    }
+    
     [RelayCommand]
     public void OpenGraph(PingObject ping)
     {
