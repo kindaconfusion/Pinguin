@@ -6,6 +6,10 @@ name: .NET
 on:
   push:
     branches: [ "master", "testing" ]
+    paths:
+      - Pinguin/**
+      - Pinguin.Test/**
+      - .github/**
   pull_request:
     branches: [ "master" ]
 
