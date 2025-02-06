@@ -10,12 +10,12 @@ public partial class AddViewModel : ViewModelBase
 {
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddHostCommand), nameof(AddTraceRouteCommand))] private string? _hostName;
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddHostCommand), nameof(AddTraceRouteCommand), nameof(CloseCommand))] private bool _traceRunning;
-    private readonly PingRunner _pingRunner;
+    private readonly IPingRunner _pingRunner;
     
     private bool CanAdd() { return !string.IsNullOrWhiteSpace(HostName) && !TraceRunning; }
     private bool CanClose() => !TraceRunning;
     
-    public AddViewModel(PingRunner pingRunner)
+    public AddViewModel(IPingRunner pingRunner)
     {
         _pingRunner = pingRunner;
     }

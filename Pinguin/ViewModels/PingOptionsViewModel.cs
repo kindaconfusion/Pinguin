@@ -17,9 +17,9 @@ public partial class PingOptionsViewModel : ViewModelBase
     
     
     
-    private readonly PingRunner _pingRunner;
+    private readonly IPingRunner _pingRunner;
 
-    public PingOptionsViewModel(PingRunner pingRunner)
+    public PingOptionsViewModel(IPingRunner pingRunner)
     {
         _pingRunner = pingRunner;
     }

@@ -47,7 +47,7 @@ public partial class PingObject : ObservableObject
     {
         var item = obj as PingObject;
         if (item == null) return false;
-        return IpAddress == item.IpAddress || HostName == item.HostName;
+        return (IpAddress is not null && IpAddress.Equals(item.IpAddress)) || (HostName is not null && HostName.Equals(item.HostName));
     }
 
     public override int GetHashCode()

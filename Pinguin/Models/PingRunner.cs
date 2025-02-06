@@ -11,29 +11,12 @@ using Avalonia.Threading;
 
 namespace Pinguin.Models;
 
-public class PingRunner
+public class PingRunner : IPingRunner
 {
     public Options Settings { get; set; } = new ();
     public ObservableCollection<PingObject> Pings { get; set; } = new();
     
-    public Dictionary<PingObject, CancellationTokenSource> Tasks = new();
-    public PingRunner(IEnumerable<PingObject>? pings)
-    {
-        //if (pings != null)
-            //Pings.ReplaceRange(pings);
-    }
-
-    /*[Obsolete("Use AddPing instead, for now...")]
-    public void ReplacePings(IEnumerable<PingObject> pings)
-    {
-        Pings.ReplaceRange(pings);
-        Task[] threads = new Task[Pings.Count];
-        for (int i = 0; i < Pings.Count; i++)
-        {
-            int index = i;
-            //threads[i] = Task.Run(() => RunPing(index, Dispatcher.UIThread));
-        }
-    }*/
+    public Dictionary<PingObject, CancellationTokenSource> Tasks { get; set;  }= new();
 
     public async Task Tracert(string host)
     {
@@ -61,7 +44,7 @@ public class PingRunner
         Task.Run(() => RunPing(ping, cts.Token));
     }
     
-    public async void AddPing(PingObject ping)
+    public async Task AddPing(PingObject ping)
     {
         Pings.Add(ping);
         var cts = new CancellationTokenSource();
@@ -69,7 +52,7 @@ public class PingRunner
         Task.Run(() => RunPing(ping, cts.Token));
     }
 
-    public async void RemovePing(PingObject ping)
+    public async Task RemovePing(PingObject ping)
     {
         CancellationTokenSource token;
         if (!Tasks.TryGetValue(ping, out token)) return;
@@ -78,7 +61,7 @@ public class PingRunner
         Pings.Remove(ping);
     }
 
-    private async Task RunPing(PingObject ping, CancellationToken cancel)
+    public async Task RunPing(PingObject ping, CancellationToken cancel)
     {
         while (true)
         {

@@ -11,7 +11,7 @@ public class PingTest
     [SetUp]
     public void Setup()
     {
-        _pingRunner = new PingRunner(null);
+        _pingRunner = new PingRunner();
     }
     
     [Test]
@@ -49,4 +49,5 @@ public class PingTest
         else Assert.Fail();
     }
     
+
 }

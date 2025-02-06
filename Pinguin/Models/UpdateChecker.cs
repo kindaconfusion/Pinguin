@@ -16,14 +16,13 @@ public static class UpdateChecker
         DefaultRequestHeaders = { {"User-Agent", "Pinguin"} }
     };
 
-    public static async Task<bool> CheckForUpdates()
+    public static async Task<bool> CheckForUpdates(String version)
     {
         using HttpResponseMessage response = await _client.GetAsync("/repos/kindaconfusion/Pinguin/releases");
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
         var releases = JsonConvert.DeserializeObject<List<Release>>(jsonResponse);
-        var version = Assembly.GetEntryAssembly()?.GetName().Version.ToString();
-        version = version.Substring(0, version.Length - 2);
+        
         var thisRelease = releases.FirstOrDefault(r => r.tag_name == version);
         if (thisRelease == null) return false;
         var newestRelease = releases.OrderByDescending(r => r.tag_name).First();

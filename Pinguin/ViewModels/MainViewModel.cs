@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,12 +27,12 @@ public partial class MainViewModel : ViewModelBase
 
     [ObservableProperty] private bool _isUpdateAvailable;
 
-    private readonly PingRunner _pingRunner;
+    private readonly IPingRunner _pingRunner;
     
     public ObservableCollection<PingObject> Pings => _pingRunner.Pings;
     
 
-    public MainViewModel(PingRunner pingRunner)
+    public MainViewModel(IPingRunner pingRunner)
     {
         _pingRunner = pingRunner;
         IsUpdateAvailable = false;
@@ -40,7 +41,9 @@ public partial class MainViewModel : ViewModelBase
 
     private async void CheckForUpdates()
     {
-        IsUpdateAvailable = await UpdateChecker.CheckForUpdates();
+        var version = Assembly.GetEntryAssembly()?.GetName().Version.ToString();
+        version = version.Substring(0, version.Length - 2);
+        IsUpdateAvailable = await UpdateChecker.CheckForUpdates(version);
     }
     
     [RelayCommand]
