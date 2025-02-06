@@ -12,10 +12,13 @@
         xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         services:WindowManager.Register="{Binding}"
         TransparencyLevelHint="Mica"
-        Background="Transparent"
+        Background="{OnPlatform Windows={StaticResource Transparent}, Default='{StaticResource BackgroundBrush}'}"
         TransparencyBackgroundFallback="#1a1a1a"
         Icon="/Assets/icon.ico"
         Title="Pinguin">
+    <!--TODO
+    - Disable transparency on Windows when it is disabled in the system
+    -->
     <windowing:AppWindow.Styles>
         <Style Selector="DataGrid">
             <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
