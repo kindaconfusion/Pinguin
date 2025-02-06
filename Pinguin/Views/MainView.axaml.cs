@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Controls;
@@ -13,6 +14,7 @@ using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Windowing;
 using Pinguin.Models;
 using Pinguin.ViewModels;
+
 
 namespace Pinguin.Views;
 
@@ -38,7 +40,7 @@ public partial class MainView : AppWindow
         var dialog = new PingOptionsView();
         dialog.ShowAsync();
     }
-
+    
     private void PingGrid_OnContextRequested(object? sender, ContextRequestedEventArgs e)
     {
         Point position;
