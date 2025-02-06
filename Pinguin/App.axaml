@@ -17,6 +17,16 @@
                      <ResourceDictionary.MergedDictionaries>
                          <ResourceInclude Source="avares://Pinguin/Styles/BetterContentDialogStyle.axaml"/>
                      </ResourceDictionary.MergedDictionaries>
+                     <ResourceDictionary.ThemeDictionaries>
+                         <ResourceDictionary x:Key='Light'>
+                             <SolidColorBrush x:Key='BackgroundBrush'>WhiteSmoke</SolidColorBrush>
+                             <SolidColorBrush x:Key='ForegroundBrush'>#0f0f0f</SolidColorBrush>
+                         </ResourceDictionary>
+                         <ResourceDictionary x:Key='Dark'>
+                             <SolidColorBrush x:Key='BackgroundBrush'>#1a1a1a</SolidColorBrush>
+                             <SolidColorBrush x:Key='ForegroundBrush'>White</SolidColorBrush>
+                         </ResourceDictionary>
+                     </ResourceDictionary.ThemeDictionaries>
                  </ResourceDictionary>
                      <ControlTheme
                          x:Key="RoundDataGrid"

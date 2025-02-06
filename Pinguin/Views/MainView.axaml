@@ -16,8 +16,14 @@
         TransparencyBackgroundFallback="#1a1a1a"
         Icon="/Assets/icon.ico"
         Title="Pinguin">
-    <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*"  Background="#1E000000">
-            <controls:CommandBar Grid.Row="1" DefaultLabelPosition="Right" Background="#1E000000"  >
+    <windowing:AppWindow.Styles>
+        <Style Selector="DataGrid">
+            <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+        </Style>    
+    </windowing:AppWindow.Styles>
+    <Grid RowDefinitions="Auto, Auto, 17*, Auto, 6*" >
+            <controls:CommandBar Grid.Row="1" DefaultLabelPosition="Right"  >
                 <controls:CommandBar.PrimaryCommands>
                     <controls:CommandBarButton IconSource="Add" Click="AddButtonOnClick" Label="Add"/>
                     <controls:CommandBarButton IconSource="Settings" Click="OptionsButtonOnClick" Label="Ping Options"/>
@@ -25,7 +31,7 @@
             </controls:CommandBar>
         <DataGrid Theme="{StaticResource RoundDataGrid}" Grid.Row="2" CornerRadius="10" ClipToBounds="True" GridLinesVisibility="All" Name="PingGrid" ContextRequested="PingGrid_OnContextRequested"
                   CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True" SelectedIndex="{Binding SelectedIndex}"
-                  Background="#2a2a2a" Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
+                  Margin="10" IsReadOnly="True" ItemsSource="{Binding Pings}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Hostname" Binding="{Binding HostName}"/>
                 <DataGridTextColumn Header="IP Address" Binding="{Binding IpAddress}"/>
